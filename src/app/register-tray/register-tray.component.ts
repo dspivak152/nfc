@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DeviceService } from '../services/index';
 
 @Component({
   selector: 'app-register-tray',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterTrayComponent implements OnInit {
 
-  constructor() { }
+  constructor(private deviceService: DeviceService) { }
 
   ngOnInit() {
+    this.deviceService.getDevices().subscribe(result => {
+      console.log(result);
+    });
   }
 
 }
