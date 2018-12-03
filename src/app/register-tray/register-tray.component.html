@@ -1,3 +1,60 @@
-<p>
-  register-tray works!
-</p>
+<mat-vertical-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Fill out your name and email</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="firstCtrl" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder=Email formControlName="emailCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Hotel Information</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Country" formControlName="countryCtrl" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" formControlName="cityCtrl" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Hotel Name" formControlName="hotelNameCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="thiredFormGroup">
+    <form [formGroup]="thiredFormGroup">
+      <ng-template matStepLabel>WIFI Information</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="wifiNameCtrl" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" formControlName="wifiPasswordCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>

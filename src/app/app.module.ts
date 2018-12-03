@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { RegisterTrayComponent } from './register-tray/register-tray.component';
 import { AuthService, AuthGuardService, DeviceService } from './services/index';
@@ -9,6 +10,8 @@ import { JwtModule, JwtHelperService, JwtModuleOptions } from '@auth0/angular-jw
 import { HomeComponent } from './home/home.component';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { MaterialModule } from './material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -16,7 +19,7 @@ export function tokenGetter() {
 
 const JWT_Module_Options: JwtModuleOptions = {
   config: {
-      tokenGetter: tokenGetter
+    tokenGetter: tokenGetter
   }
 };
 
@@ -32,6 +35,9 @@ const JWT_Module_Options: JwtModuleOptions = {
     AppRoutingModule,
     HttpModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FormsModule, ReactiveFormsModule,
     JwtModule.forRoot(JWT_Module_Options)
   ],
   providers: [AuthService, JwtHelperService, AuthGuardService, DeviceService],
