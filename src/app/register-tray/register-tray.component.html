@@ -24,6 +24,11 @@
         <input matInput placeholder="City" formControlName="cityCtrl" required>
       </mat-form-field>
       <mat-form-field>
+        <mat-select placeholder="Hotel Name">
+          <mat-option *ngFor="let hotel of hotels" [value]="hotel.Id">
+            {{hotel.name}}
+          </mat-option>
+        </mat-select>
         <input matInput placeholder="Hotel Name" formControlName="hotelNameCtrl" required>
       </mat-form-field>
       <div>

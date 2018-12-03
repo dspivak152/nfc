@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeviceService } from '../services/index';
 
+export interface genericIdName {
+  Id: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
@@ -12,9 +17,9 @@ export class RegisterTrayComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thiredFormGroup: FormGroup;
+  hotels: genericIdName[] = [];
 
   constructor(private deviceService: DeviceService, private _formBuilder: FormBuilder) { }
-
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -32,6 +37,8 @@ export class RegisterTrayComponent implements OnInit {
     });
 
     this.deviceService.getDevices().subscribe(result => {
+      if (result)
+        this.hotels = result;
       console.log(result);
     });
   }
