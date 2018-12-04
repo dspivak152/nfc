@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeviceService } from '../services/index';
-
-export interface genericIdName {
-  Id: number;
-  name: string;
-}
+import { HotelInterface } from '../interfaces/index';
+import { SendNfcMessage } from '../models/index';
+import { WindowRef } from '../WindowRef';
 
 @Component({
   selector: 'app-register-tray',
@@ -17,9 +15,12 @@ export class RegisterTrayComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thiredFormGroup: FormGroup;
-  hotels: genericIdName[] = [];
+  sendNfcMessage = new SendNfcMessage();
+  hotels: HotelInterface[] = [];
 
-  constructor(private deviceService: DeviceService, private _formBuilder: FormBuilder) { }
+  constructor(private deviceService: DeviceService, 
+              private _formBuilder: FormBuilder,
+              private winRef: WindowRef) { }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -36,10 +37,14 @@ export class RegisterTrayComponent implements OnInit {
       wifiPasswordCtrl: ['', Validators.required]
     });
 
-    this.deviceService.getDevices().subscribe(result => {
+    this.deviceService.getHotels().subscribe(result => {
       if (result)
         this.hotels = result;
       console.log(result);
     });
+  }
+
+  sendMessageToNfc(){
+    this.winRef.nativeWindow.foo();
   }
 }

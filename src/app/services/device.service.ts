@@ -9,8 +9,8 @@ export class DeviceService {
 
   constructor(private http: HttpClient) { }
 
-  getDevices(): Observable<any> {
-    return this.http.get<any>('http://minibars.mailman.co.il/api/Devices/GetListDevices');
+  getHotels(): Observable<any> {
+    return this.http.get<any>('http://minibars.mailman.co.il/api/hotels/GetListHotels');
   }
 
   handleError<T>(operation = 'operation', result?: T) {

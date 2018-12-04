@@ -26,7 +26,7 @@
       <mat-form-field>
         <mat-select placeholder="Hotel Name">
           <mat-option *ngFor="let hotel of hotels" [value]="hotel.Id">
-            {{hotel.name}}
+            {{hotel.Name}}
           </mat-option>
         </mat-select>
         <input matInput placeholder="Hotel Name" formControlName="hotelNameCtrl" required>
@@ -49,7 +49,7 @@
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext (click)="sendMessageToNfc()" >Next</button>
       </div>
     </form>
   </mat-step>

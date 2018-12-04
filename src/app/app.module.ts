@@ -12,6 +12,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { MaterialModule } from './material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { WindowRef } from './WindowRef';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -40,7 +41,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     FormsModule, ReactiveFormsModule,
     JwtModule.forRoot(JWT_Module_Options)
   ],
-  providers: [AuthService, JwtHelperService, AuthGuardService, DeviceService],
+  providers: [AuthService, JwtHelperService, AuthGuardService, DeviceService, WindowRef],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
