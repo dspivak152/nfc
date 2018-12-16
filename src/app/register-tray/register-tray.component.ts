@@ -1,28 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceService } from '../services/index';
 import { HotelInterface } from '../interfaces/index';
-import { SendNfcMessage } from '../models/index';
+import { MessageNfcModel } from '../models/index';
 import { WindowRef } from '../WindowRef';
 
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
-  styleUrls: ['./register-tray.component.css']
+  styleUrls: ['./register-tray.component.scss']
 })
 export class RegisterTrayComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thiredFormGroup: FormGroup;
-  sendNfcMessage = new SendNfcMessage();
   hotels: HotelInterface[] = [];
+  messageNfcModel = new MessageNfcModel();
 
-  constructor(private deviceService: DeviceService, 
-              private _formBuilder: FormBuilder,
-              private winRef: WindowRef) { }
+  constructor(private deviceService: DeviceService,
+    private _formBuilder: FormBuilder,
+    private winRef: WindowRef) { }
 
   ngOnInit() {
+    this.firstFormGroup = new FormGroup({
+      firstCtrl: new FormControl(),
+      emailCtrl: new FormControl()
+    });
+
+    this.secondFormGroup = new FormGroup({
+      countryCtrl: new FormControl(),
+      cityCtrl: new FormControl(),
+      hotelCtrl: new FormControl()
+    });
+
+    this.thiredFormGroup = new FormGroup({
+      wifiNameCtrl: new FormControl(),
+      wifiPasswordCtrl: new FormControl()
+    });
+
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
       emailCtrl: ['', Validators.required]
@@ -30,7 +46,7 @@ export class RegisterTrayComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       countryCtrl: ['', Validators.required],
       cityCtrl: ['', Validators.required],
-      hotelNameCtrl: ['', Validators.required]
+      hotelCtrl: ['', Validators.required]
     });
     this.thiredFormGroup = this._formBuilder.group({
       wifiNameCtrl: ['', Validators.required],
@@ -44,7 +60,8 @@ export class RegisterTrayComponent implements OnInit {
     });
   }
 
-  sendMessageToNfc(){
-    this.winRef.nativeWindow.foo();
+  sendMessageToNfc() {
+    console.log(this.messageNfcModel);
+    this.winRef.nativeWindow.foo(this.messageNfcModel);
   }
 }

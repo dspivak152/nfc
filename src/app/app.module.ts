@@ -38,7 +38,8 @@ const JWT_Module_Options: JwtModuleOptions = {
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule, 
+    ReactiveFormsModule,
     JwtModule.forRoot(JWT_Module_Options)
   ],
   providers: [AuthService, JwtHelperService, AuthGuardService, DeviceService, WindowRef],

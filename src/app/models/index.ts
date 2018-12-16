@@ -1,1 +1,1 @@
-export * from './sendNfcMessage';
+export * from './messageNfcModel';

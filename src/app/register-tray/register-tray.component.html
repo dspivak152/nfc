@@ -3,11 +3,11 @@
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Fill out your name and email</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="firstCtrl" required>
+        <input matInput placeholder="Name" formControlName="firstCtrl" required [(ngModel)]="messageNfcModel.name">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder=Email formControlName="emailCtrl" required>
+        <input matInput placeholder=Email formControlName="emailCtrl" required [(ngModel)]="messageNfcModel.email">
       </mat-form-field>
       <div>
         <button mat-button matStepperNext>Next</button>
@@ -18,18 +18,18 @@
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Hotel Information</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Country" formControlName="countryCtrl" required>
+        <input matInput placeholder="Country" formControlName="countryCtrl" required [(ngModel)]="messageNfcModel.country">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="City" formControlName="cityCtrl" required>
+        <input matInput placeholder="City" formControlName="cityCtrl" required [(ngModel)]="messageNfcModel.city">
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="Hotel Name">
+        <input matInput placeholder="Hotel" formControlName="hotelCtrl" required [(ngModel)]="messageNfcModel.hotelId">
+        <!-- <mat-select placeholder="Hotel Name" [ngModelOptions]="{standalone: true}" [(ngModel)]="messageNfcModel.hotelId">
           <mat-option *ngFor="let hotel of hotels" [value]="hotel.Id">
             {{hotel.Name}}
           </mat-option>
-        </mat-select>
-        <input matInput placeholder="Hotel Name" formControlName="hotelNameCtrl" required>
+        </mat-select> -->
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -42,14 +42,14 @@
     <form [formGroup]="thiredFormGroup">
       <ng-template matStepLabel>WIFI Information</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="wifiNameCtrl" required>
+        <input matInput placeholder="Name" formControlName="wifiNameCtrl" required [(ngModel)]="messageNfcModel.wifiName">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Password" formControlName="wifiPasswordCtrl" required>
+        <input matInput placeholder="Password" formControlName="wifiPasswordCtrl" required [(ngModel)]="messageNfcModel.wifiPassword">
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext (click)="sendMessageToNfc()" >Next</button>
+        <button mat-button matStepperNext (click)="sendMessageToNfc()">Next</button>
       </div>
     </form>
   </mat-step>
