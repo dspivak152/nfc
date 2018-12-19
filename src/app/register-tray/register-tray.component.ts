@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceService } from '../services/index';
-import { HotelInterface } from '../interfaces/index';
+import { ArraySimpleInterface } from '../interfaces/index';
 import { MessageNfcModel } from '../models/index';
 import { WindowRef } from '../WindowRef';
 
@@ -15,7 +15,9 @@ export class RegisterTrayComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thiredFormGroup: FormGroup;
-  hotels: HotelInterface[] = [];
+  hotels: ArraySimpleInterface[] = [];
+  cities: string[] = [];
+  counties: string[] = [];
   messageNfcModel = new MessageNfcModel();
 
   constructor(private deviceService: DeviceService,
@@ -52,16 +54,25 @@ export class RegisterTrayComponent implements OnInit {
       wifiNameCtrl: ['', Validators.required],
       wifiPasswordCtrl: ['', Validators.required]
     });
-
+    let self = this;
     this.deviceService.getHotels().subscribe(result => {
-      if (result)
-        this.hotels = result;
-      console.log(result);
+      if (result && result.length > 0) {
+        result.forEach(function (hotel, index) {
+          self.hotels.push({ Id: hotel.Id, Name: hotel.Name });
+          if (hotel.City != null)
+            self.cities.push(hotel.City);
+
+          if (hotel.Country != null) {
+            var found = (self.counties.indexOf(hotel.Country) > -1);
+            if (!found)
+              self.counties.push(hotel.Country);
+          }
+        });
+      }
     });
   }
 
   sendMessageToNfc() {
-    console.log(this.messageNfcModel);
     this.winRef.nativeWindow.foo(this.messageNfcModel);
   }
 }

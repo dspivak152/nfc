@@ -4,12 +4,14 @@ import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { RegisterTrayComponent } from './register-tray/register-tray.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     {
         path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
+            { path: 'dashboard', component: DashboardComponent },
             { path: 'register-tray', component: RegisterTrayComponent, canActivate: [AuthGuard] }
         ]
     },

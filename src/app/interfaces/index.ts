@@ -1,1 +1,1 @@
-export * from './hotelInterface';
+export * from './ArraySimpleInterface';

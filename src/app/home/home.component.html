@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <img mat-card-image src="../../assets/pp.jpeg" style="width: 10%;">
+    <img mat-card-image src="assets/pp.jpeg" routerLink="/dashboard" style="width: 10%;">
     <!-- <h1 class="example-app-name">Sinfori</h1> -->
   </mat-toolbar>
 
@@ -13,7 +13,6 @@
         <a mat-list-item routerLink="/register-tray">Register Tray</a>
       </mat-nav-list>
     </mat-sidenav>
-
     <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>

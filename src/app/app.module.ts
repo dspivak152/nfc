@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { MaterialModule } from './material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { WindowRef } from './WindowRef';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -29,7 +30,8 @@ const JWT_Module_Options: JwtModuleOptions = {
     AppComponent,
     LoginComponent,
     RegisterTrayComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
