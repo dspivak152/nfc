@@ -19,27 +19,34 @@
       <ng-template matStepLabel>Hotel Information</ng-template>
       <mat-form-field>
         <!-- <input matInput placeholder="Country" formControlName="countryCtrl" required [(ngModel)]="messageNfcModel.country"> -->
-        <mat-select placeholder="Country" [ngModelOptions]="{standalone: true}" [(ngModel)]="messageNfcModel.country">
-            <mat-option *ngFor="let country of counties" [value]="country">
-              {{country}}
-            </mat-option>
-          </mat-select>
+        <mat-select placeholder="Country" [ngModelOptions]="{standalone: true}" *ngIf="counties"
+          [(ngModel)]="messageNfcModel.country" #countrySelect (ngModelChange)="onCountryChange(countrySelect.value)">
+          <mat-option *ngFor="let country of counties" [value]="country.id">
+            {{country.name}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field>
         <!-- <input matInput placeholder="City" formControlName="cityCtrl" required [(ngModel)]="messageNfcModel.city"> -->
-        <mat-select placeholder="City" [ngModelOptions]="{standalone: true}" [(ngModel)]="messageNfcModel.city">
-          <mat-option *ngFor="let city of cities" [value]="city">
-            {{city}}
+        <mat-select placeholder="City" [ngModelOptions]="{standalone: true}" *ngIf="cities"
+          [(ngModel)]="messageNfcModel.city" #citySelect (ngModelChange)="onCityChange(citySelect.value)">
+          <mat-option *ngFor="let city of cities" [value]="city.id">
+            {{city.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <!-- <input matInput placeholder="Hotel" formControlName="hotelCtrl" required [(ngModel)]="messageNfcModel.hotelId"> -->
-        <mat-select placeholder="Hotel Name" [ngModelOptions]="{standalone: true}" [(ngModel)]="messageNfcModel.hotelId">
-          <mat-option *ngFor="let hotel of hotels" [value]="hotel.Id">
-            {{hotel.Name}}
+        <mat-select placeholder="Hotel Name" [ngModelOptions]="{standalone: true}" *ngIf="hotels"
+          [(ngModel)]="messageNfcModel.hotelId">
+          <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+            {{hotel.name}}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Room" formControlName="roomId" required
+          [(ngModel)]="messageNfcModel.roomId">
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -52,10 +59,12 @@
     <form [formGroup]="thiredFormGroup">
       <ng-template matStepLabel>WIFI Information</ng-template>
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="wifiNameCtrl" required [(ngModel)]="messageNfcModel.wifiName">
+        <input matInput placeholder="Name" formControlName="wifiNameCtrl" required
+          [(ngModel)]="messageNfcModel.wifiName">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Password" formControlName="wifiPasswordCtrl" required [(ngModel)]="messageNfcModel.wifiPassword">
+        <input matInput placeholder="Password" formControlName="wifiPasswordCtrl" required
+          [(ngModel)]="messageNfcModel.wifiPassword">
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>

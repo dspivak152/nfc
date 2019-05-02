@@ -10,7 +10,15 @@ export class DeviceService {
   constructor(private http: HttpClient) { }
 
   getHotels(): Observable<any> {
-    return this.http.get<any>('http://minibars.mailman.co.il/api/hotels/GetListHotels');
+    return this.http.get<any>('http://sinfori.dev.valigar.co.il:3080/api/hotels');
+  }
+
+  getCountries(): Observable<any> {
+    return this.http.get<any>('http://sinfori.dev.valigar.co.il:3080/api/locations/countries');
+  }
+
+  getCities(countryId: number): Observable<any> {
+    return this.http.get<any>('http://sinfori.dev.valigar.co.il:3080/api/locations/cities/' + countryId);
   }
 
   handleError<T>(operation = 'operation', result?: T) {
