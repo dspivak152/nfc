@@ -10,7 +10,7 @@
         <input matInput placeholder=Email formControlName="emailCtrl" required [(ngModel)]="messageNfcModel.email">
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="goForward(stepper)">Next</button>
       </div>
     </form>
   </mat-step>
@@ -50,7 +50,7 @@
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="goForward(stepper)">Next</button>
       </div>
     </form>
   </mat-step>

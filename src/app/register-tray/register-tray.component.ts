@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
-import { MessageNfcModel } from '../models/index';
+import { MessageNfcModel, RoomAvailable } from '../models/index';
 import { WindowRef } from '../WindowRef';
+import { MatStepper } from '@angular/material';
+import { SpinnerService } from '../services/spinner.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-register-tray',
@@ -19,12 +22,16 @@ export class RegisterTrayComponent implements OnInit {
   cities: string[] = [];
   counties: any[] = [];
   messageNfcModel = new MessageNfcModel();
+  roomAvailable: RoomAvailable;
 
   constructor(private deviceService: DeviceService,
     private _formBuilder: FormBuilder,
-    private winRef: WindowRef) { }
+    private winRef: WindowRef,
+    private spinnerService: SpinnerService,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+
     this.firstFormGroup = new FormGroup({
       firstCtrl: new FormControl(),
       emailCtrl: new FormControl()
@@ -56,25 +63,9 @@ export class RegisterTrayComponent implements OnInit {
       wifiNameCtrl: ['', Validators.required],
       wifiPasswordCtrl: ['', Validators.required]
     });
-    //let self = this;
     this.deviceService.getCountries().subscribe(counties => {
       this.counties = counties;
     });
-    // this.deviceService.getHotels().subscribe(result => {
-    //   if (result && result.length > 0) {
-    //     result.forEach(function (hotel, index) {
-    //       self.hotels.push({ Id: hotel.Id, Name: hotel.Name });
-    //       if (hotel.City != null)
-    //         self.cities.push(hotel.City);
-
-    //       if (hotel.Country != null) {
-    //         var found = (self.counties.indexOf(hotel.Country) > -1);
-    //         if (!found)
-    //           self.counties.push(hotel.Country);
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   sendMessageToNfc() {
@@ -83,18 +74,42 @@ export class RegisterTrayComponent implements OnInit {
 
   onCountryChange(countryId: number) {
     if (countryId > 0) {
+      this.spinnerService.show();
       this.deviceService.getCities(countryId).subscribe(cities => {
         this.cities = cities;
+        this.spinnerService.hide();
       });
     }
   }
 
   onCityChange(cityId: number) {
     if (cityId > 0) {
+      this.spinnerService.show();
       this.deviceService.getHotels().subscribe(hotels => {
-        console.log(hotels);
         this.hotels = hotels;
+        this.spinnerService.hide();
       });
     }
+  }
+
+  goForward(stepper: MatStepper) {
+    //check for the room availablity 
+    if (stepper.selectedIndex == 1) {
+      this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name,
+        this.messageNfcModel.email, this.messageNfcModel.hotelId);
+      this.spinnerService.show();
+      this.deviceService.checkRoomAvailabilty(this.roomAvailable).subscribe(result => {
+        this.spinnerService.hide();
+        if (result && result.isCreated) {
+          //continue to next step
+          //stepper.next();
+        } else {
+          stepper.previous();
+          this.snackBar.open("Error creating new room", '', { duration: 2000 });
+          return false;
+        }
+      });
+    }
+    stepper.next();
   }
 }

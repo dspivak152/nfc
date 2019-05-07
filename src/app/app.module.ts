@@ -14,6 +14,8 @@ import { MaterialModule } from './material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { WindowRef } from './WindowRef';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerService } from './services/spinner.service';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -31,7 +33,8 @@ const JWT_Module_Options: JwtModuleOptions = {
     LoginComponent,
     RegisterTrayComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -40,11 +43,11 @@ const JWT_Module_Options: JwtModuleOptions = {
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     JwtModule.forRoot(JWT_Module_Options)
   ],
-  providers: [AuthService, JwtHelperService, AuthGuardService, DeviceService, WindowRef],
+  providers: [AuthService, JwtHelperService, AuthGuardService, DeviceService, WindowRef, SpinnerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

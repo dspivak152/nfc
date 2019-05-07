@@ -9,11 +9,11 @@ export class AuthGuardService implements CanActivate {
 
   constructor(public auth: AuthService, public router: Router) { }
 
-  canActivate(): boolean{
-    if(!this.auth.isAutheticated()){
-      this.router.navigate(['login']);
-      return false;
-    }
+  canActivate(): boolean {
+    // if(!this.auth.isAutheticated()){
+    //   this.router.navigate(['login']);
+    //   return false;
+    // }
     return true;
   }
 }
