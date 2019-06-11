@@ -8,4 +8,5 @@ export class MessageNfcModel {
     wifiName: string;
     wifiPassword: string;
     roomId: number;
+    lightSensitivity: number = 420;
 }

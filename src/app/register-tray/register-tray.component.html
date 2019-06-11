@@ -48,6 +48,10 @@
         <input matInput type="number" placeholder="Room" formControlName="roomId" required
           [(ngModel)]="messageNfcModel.roomId">
       </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" min="0" max="1023" placeholder="Light Sensitivity"
+          formControlName="lightSensitivity" required [(ngModel)]="messageNfcModel.lightSensitivity">
+      </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="goForward(stepper)">Next</button>

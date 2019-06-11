@@ -41,7 +41,8 @@ export class RegisterTrayComponent implements OnInit {
       countryCtrl: new FormControl(),
       cityCtrl: new FormControl(),
       hotelCtrl: new FormControl(),
-      roomId: new FormControl()
+      roomId: new FormControl(),
+      lightSensitivity: new FormControl()
     });
 
     this.thiredFormGroup = new FormGroup({
@@ -57,7 +58,8 @@ export class RegisterTrayComponent implements OnInit {
       countryCtrl: ['', Validators.required],
       cityCtrl: ['', Validators.required],
       hotelCtrl: ['', Validators.required],
-      roomId: ['', Validators.required]
+      roomId: ['', Validators.required],
+      lightSensitivity: ['', [Validators.required, Validators.max(1023), Validators.min(0)]]
     });
     this.thiredFormGroup = this._formBuilder.group({
       wifiNameCtrl: ['', Validators.required],
@@ -95,6 +97,10 @@ export class RegisterTrayComponent implements OnInit {
   goForward(stepper: MatStepper) {
     //check for the room availablity 
     if (stepper.selectedIndex == 1) {
+      if (this.messageNfcModel.lightSensitivity < 0 || this.messageNfcModel.lightSensitivity > 1023) {
+        this.snackBar.open("Please enter a valid number for the light sensitivity", '', { duration: 2000 });
+        return false;
+      }
       this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name,
         this.messageNfcModel.email, this.messageNfcModel.hotelId);
       this.spinnerService.show();
