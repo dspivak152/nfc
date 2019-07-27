@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'nfc';
 
-  constructor( private router: Router){
+  title = 'nfc';
+  constructor(private router: Router) {
     this.router.navigate(['/dashboard']);
   }
 }

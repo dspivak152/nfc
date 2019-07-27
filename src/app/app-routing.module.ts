@@ -5,6 +5,7 @@ import { RegisterTrayComponent } from './register-tray/register-tray.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PredefinedDataComponent } from './predefined-data/predefined-data.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -12,7 +13,8 @@ const routes: Routes = [
     {
         path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
             { path: 'dashboard', component: DashboardComponent },
-            { path: 'register-tray', component: RegisterTrayComponent, canActivate: [AuthGuard] }
+            { path: 'register-tray', component: RegisterTrayComponent, canActivate: [AuthGuard] },
+            { path: 'predefine-data', component: PredefinedDataComponent, canActivate: [AuthGuard] }
         ]
     },
     { path: '**', redirectTo: '' }

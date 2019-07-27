@@ -1,4 +1,4 @@
-<mat-vertical-stepper [linear]="isLinear" #stepper>
+<!-- <mat-vertical-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>Fill out your name and email</ng-template>
@@ -18,7 +18,7 @@
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>Hotel Information</ng-template>
       <mat-form-field>
-        <!-- <input matInput placeholder="Country" formControlName="countryCtrl" required [(ngModel)]="messageNfcModel.country"> -->
+        <input matInput placeholder="Country" formControlName="countryCtrl" required [(ngModel)]="messageNfcModel.country">
         <mat-select placeholder="Country" [ngModelOptions]="{standalone: true}" *ngIf="counties"
           [(ngModel)]="messageNfcModel.country" #countrySelect (ngModelChange)="onCountryChange(countrySelect.value)">
           <mat-option *ngFor="let country of counties" [value]="country.id">
@@ -27,7 +27,6 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <!-- <input matInput placeholder="City" formControlName="cityCtrl" required [(ngModel)]="messageNfcModel.city"> -->
         <mat-select placeholder="City" [ngModelOptions]="{standalone: true}" *ngIf="cities"
           [(ngModel)]="messageNfcModel.city" #citySelect (ngModelChange)="onCityChange(citySelect.value)">
           <mat-option *ngFor="let city of cities" [value]="city.id">
@@ -36,7 +35,6 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <!-- <input matInput placeholder="Hotel" formControlName="hotelCtrl" required [(ngModel)]="messageNfcModel.hotelId"> -->
         <mat-select placeholder="Hotel Name" [ngModelOptions]="{standalone: true}" *ngIf="hotels"
           [(ngModel)]="messageNfcModel.hotelId">
           <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
@@ -85,4 +83,61 @@
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
-</mat-vertical-stepper>
+</mat-vertical-stepper> -->
+<form [formGroup]="firstFormGroup">
+  <!-- <ng-template matStepLabel>Fill out your name and email</ng-template> -->
+  <mat-form-field>
+    <input matInput placeholder="Name" formControlName="firstCtrl" required [(ngModel)]="messageNfcModel.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder=Email formControlName="emailCtrl" required [(ngModel)]="messageNfcModel.email">
+  </mat-form-field>
+
+  <ng-template matStepLabel>Hotel Information</ng-template>
+  <mat-form-field>
+    <input matInput placeholder="Country" formControlName="countryCtrl" required [(ngModel)]="messageNfcModel.country">
+    <mat-select placeholder="Country" [ngModelOptions]="{standalone: true}" *ngIf="counties"
+      [(ngModel)]="messageNfcModel.country" #countrySelect (ngModelChange)="onCountryChange(countrySelect.value)">
+      <mat-option *ngFor="let country of counties" [value]="country.id">
+        {{country.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="City" [ngModelOptions]="{standalone: true}" *ngIf="cities"
+      [(ngModel)]="messageNfcModel.city" #citySelect (ngModelChange)="onCityChange(citySelect.value)">
+      <mat-option *ngFor="let city of cities" [value]="city.id">
+        {{city.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Hotel Name" [ngModelOptions]="{standalone: true}" *ngIf="hotels"
+      [(ngModel)]="messageNfcModel.hotelId">
+      <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+        {{hotel.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" placeholder="Room" formControlName="roomId" required
+      [(ngModel)]="messageNfcModel.roomId">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" min="0" max="1023" placeholder="Light Sensitivity" formControlName="lightSensitivity"
+      required [(ngModel)]="messageNfcModel.lightSensitivity">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="wifi Name" formControlName="wifiNameCtrl" required
+      [(ngModel)]="messageNfcModel.wifiName">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" formControlName="wifiPasswordCtrl" required
+      [(ngModel)]="messageNfcModel.wifiPassword">
+  </mat-form-field>
+  <div>
+    <button mat-button (click)="sendMessageToNfc()">Register</button>
+    <button mat-button>Reset</button>
+  </div>
+</form>
