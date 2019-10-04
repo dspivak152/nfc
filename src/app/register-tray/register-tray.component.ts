@@ -4,7 +4,6 @@ import { DeviceService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
 import { MessageNfcModel, RoomAvailable } from '../models/index';
 import { WindowRef } from '../WindowRef';
-import { MatStepper } from '@angular/material';
 import { SpinnerService } from '../services/spinner.service';
 import { MatSnackBar } from '@angular/material';
 
@@ -34,7 +33,6 @@ export class RegisterTrayComponent implements OnInit {
 
     this.firstFormGroup = new FormGroup({
       firstCtrl: new FormControl(),
-      emailCtrl: new FormControl(),
       countryCtrl: new FormControl(),
       cityCtrl: new FormControl(),
       hotelCtrl: new FormControl(),
@@ -44,22 +42,8 @@ export class RegisterTrayComponent implements OnInit {
       wifiPasswordCtrl: new FormControl()
     });
 
-    // this.secondFormGroup = new FormGroup({
-    //   countryCtrl: new FormControl(),
-    //   cityCtrl: new FormControl(),
-    //   hotelCtrl: new FormControl(),
-    //   roomId: new FormControl(),
-    //   lightSensitivity: new FormControl()
-    // });
-
-    // this.thiredFormGroup = new FormGroup({
-    //   wifiNameCtrl: new FormControl(),
-    //   wifiPasswordCtrl: new FormControl()
-    // });
-
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required],
-      emailCtrl: ['', Validators.required],
       countryCtrl: ['', Validators.required],
       cityCtrl: ['', Validators.required],
       hotelCtrl: ['', Validators.required],
@@ -68,20 +52,22 @@ export class RegisterTrayComponent implements OnInit {
       wifiNameCtrl: ['', Validators.required],
       wifiPasswordCtrl: ['', Validators.required]
     });
-    // this.secondFormGroup = this._formBuilder.group({
-    //   countryCtrl: ['', Validators.required],
-    //   cityCtrl: ['', Validators.required],
-    //   hotelCtrl: ['', Validators.required],
-    //   roomId: ['', Validators.required],
-    //   lightSensitivity: ['', [Validators.required, Validators.max(1023), Validators.min(0)]]
-    // });
-    // this.thiredFormGroup = this._formBuilder.group({
-    //   wifiNameCtrl: ['', Validators.required],
-    //   wifiPasswordCtrl: ['', Validators.required]
-    // });
     this.deviceService.getCountries().subscribe(counties => {
       this.counties = counties;
     });
+
+    let localStorageData: any = localStorage.getItem('predifinedData');
+    if (localStorageData) {
+      localStorageData = JSON.parse(localStorageData);
+      this.messageNfcModel.name = localStorageData.name;
+      this.messageNfcModel.country = localStorageData.country;
+      this.onCountryChange(this.messageNfcModel.country);
+      this.messageNfcModel.city = localStorageData.city;
+      this.onCityChange(this.messageNfcModel.city);
+      this.messageNfcModel.hotelId = localStorageData.hotelId;
+      this.messageNfcModel.wifiName = localStorageData.wifiName;
+      this.messageNfcModel.wifiPassword = localStorageData.wifiPassword;
+    }
   }
 
   sendMessageToNfc() {
@@ -89,8 +75,8 @@ export class RegisterTrayComponent implements OnInit {
       this.snackBar.open("Please enter a valid number for the light sensitivity", '', { duration: 2000 });
       return false;
     }
-    this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name,
-      this.messageNfcModel.email, this.messageNfcModel.hotelId);
+    this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name, this.messageNfcModel.hotelId);
+    //this.messageNfcModel.email, this.messageNfcModel.hotelId);
     this.spinnerService.show();
     this.deviceService.checkRoomAvailabilty(this.roomAvailable).subscribe(result => {
       this.spinnerService.hide();
@@ -124,28 +110,20 @@ export class RegisterTrayComponent implements OnInit {
     }
   }
 
-  goForward(stepper: MatStepper) {
-    //check for the room availablity as
-    //if (stepper.selectedIndex == 1) {
-    if (this.messageNfcModel.lightSensitivity < 0 || this.messageNfcModel.lightSensitivity > 1023) {
-      this.snackBar.open("Please enter a valid number for the light sensitivity", '', { duration: 2000 });
-      return false;
-    }
-    this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name,
-      this.messageNfcModel.email, this.messageNfcModel.hotelId);
-    this.spinnerService.show();
-    this.deviceService.checkRoomAvailabilty(this.roomAvailable).subscribe(result => {
-      this.spinnerService.hide();
-      if (result && result.isCreated) {
-        //continue to next step
-        //stepper.next();
-      } else {
-        //stepper.previous();
-        this.snackBar.open("Error creating new room", '', { duration: 2000 });
-        return false;
-      }
-    });
-    //}
-    //stepper.next();
-  }
+  // goForward(stepper: MatStepper) {
+  //   if (this.messageNfcModel.lightSensitivity < 0 || this.messageNfcModel.lightSensitivity > 1023) {
+  //     this.snackBar.open("Please enter a valid number for the light sensitivity", '', { duration: 2000 });
+  //     return false;
+  //   }
+  //   this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name, this.messageNfcModel.hotelId);
+  //   this.spinnerService.show();
+  //   this.deviceService.checkRoomAvailabilty(this.roomAvailable).subscribe(result => {
+  //     this.spinnerService.hide();
+  //     if (result && result.isCreated) {
+  //     } else {
+  //       this.snackBar.open("Error creating new room", '', { duration: 2000 });
+  //       return false;
+  //     }
+  //   });
+  // }
 }

@@ -1,3 +1,51 @@
-<p>
-  predefined-data works!
-</p>
+<form [formGroup]="firstFormGroup">
+  <mat-form-field>
+    <input matInput placeholder="Name" formControlName="firstCtrl" [(ngModel)]="messageNfcModel.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Country" formControlName="countryCtrl" [(ngModel)]="messageNfcModel.country">
+    <mat-select placeholder="Country" [ngModelOptions]="{standalone: true}" *ngIf="counties"
+      [(ngModel)]="messageNfcModel.country" #countrySelect (ngModelChange)="onCountryChange(countrySelect.value)">
+      <mat-option *ngFor="let country of counties" [value]="country.id">
+        {{country.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="City" [ngModelOptions]="{standalone: true}" *ngIf="cities"
+      [(ngModel)]="messageNfcModel.city" #citySelect (ngModelChange)="onCityChange(citySelect.value)">
+      <mat-option *ngFor="let city of cities" [value]="city.id">
+        {{city.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Hotel Name" [ngModelOptions]="{standalone: true}" *ngIf="hotels"
+      [(ngModel)]="messageNfcModel.hotelId">
+      <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
+        {{hotel.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" placeholder="Room" formControlName="roomId" [(ngModel)]="messageNfcModel.roomId">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" min="0" max="1023" placeholder="Light Sensitivity" formControlName="lightSensitivity"
+      [(ngModel)]="messageNfcModel.lightSensitivity">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="wifi Name" formControlName="wifiNameCtrl" [(ngModel)]="messageNfcModel.wifiName">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" formControlName="wifiPasswordCtrl"
+      [(ngModel)]="messageNfcModel.wifiPassword">
+  </mat-form-field>
+  <div>
+    <button mat-button (click)="saveToDefaut()">Save To Default</button>
+    <button mat-button (click)="clearForm()">Reset Form</button>
+    <button mat-button (click)="deleteDefault()">Delete Default</button>
+  </div>
+</form>
