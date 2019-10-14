@@ -17,6 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerService } from './services/spinner.service';
 import { PredefinedDataComponent } from './predefined-data/predefined-data.component';
+import { RegisteredDevicesComponent } from './registered-devices/registered-devices.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -36,7 +37,8 @@ const JWT_Module_Options: JwtModuleOptions = {
     HomeComponent,
     DashboardComponent,
     SpinnerComponent,
-    PredefinedDataComponent
+    PredefinedDataComponent,
+    RegisteredDevicesComponent
   ],
   imports: [
     BrowserModule,

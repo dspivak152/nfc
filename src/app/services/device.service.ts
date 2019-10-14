@@ -30,6 +30,10 @@ export class DeviceService {
       catchError(this.handleError<any>('Unable to create new room')));;
   }
 
+  getDevices(): Observable<any> {
+    return this.http.post<any>('http://sinfori.dev.valigar.co.il:3080/api/devices', null);
+  }
+
   handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.log(error);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
@@ -6,22 +6,24 @@ import { MessageNfcModel, RoomAvailable } from '../models/index';
 import { WindowRef } from '../WindowRef';
 import { SpinnerService } from '../services/spinner.service';
 import { MatSnackBar } from '@angular/material';
+import { Subject } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
   styleUrls: ['./register-tray.component.scss']
 })
-export class RegisterTrayComponent implements OnInit {
+export class RegisterTrayComponent implements OnInit, OnDestroy {
   isLinear = false;
   firstFormGroup: FormGroup;
-  //secondFormGroup: FormGroup;
-  //thiredFormGroup: FormGroup;
   hotels: ArraySimpleInterface[] = [];
   cities: string[] = [];
   counties: any[] = [];
   messageNfcModel = new MessageNfcModel();
   roomAvailable: RoomAvailable;
+  private onSubject = new Subject<{ key: string, value: any }>();
+  public changes = this.onSubject.asObservable().pipe(share());
 
   constructor(private deviceService: DeviceService,
     private _formBuilder: FormBuilder,
@@ -56,18 +58,85 @@ export class RegisterTrayComponent implements OnInit {
       this.counties = counties;
     });
 
+    let dataFromTray: any = localStorage.getItem('dataFromTray');
     let localStorageData: any = localStorage.getItem('predifinedData');
-    if (localStorageData) {
-      localStorageData = JSON.parse(localStorageData);
-      this.messageNfcModel.name = localStorageData.name;
-      this.messageNfcModel.country = localStorageData.country;
-      this.onCountryChange(this.messageNfcModel.country);
-      this.messageNfcModel.city = localStorageData.city;
-      this.onCityChange(this.messageNfcModel.city);
-      this.messageNfcModel.hotelId = localStorageData.hotelId;
-      this.messageNfcModel.wifiName = localStorageData.wifiName;
-      this.messageNfcModel.wifiPassword = localStorageData.wifiPassword;
+
+    //If there is stored data but the usee came to an existing tray then the data that will be on the screen us from the tray
+    if (dataFromTray != undefined && localStorageData != undefined) {
+      this.setExistingData(JSON.parse(dataFromTray));
     }
+
+    //set values from tray only
+    if (dataFromTray != undefined && localStorageData == undefined) {
+      this.setExistingData(JSON.parse(dataFromTray));
+    }
+
+    //tray from default values
+    if (dataFromTray == undefined && localStorageData != undefined) {
+      this.setExistingData(JSON.parse(localStorageData));
+    }
+
+    this.deviceService.getDevices().subscribe(result => {
+      console.log('devices', result);
+    });
+
+    // this.start();
+  }
+
+  // private start(): void {
+  //   window.addEventListener("storage", this.storageEventListener.bind(this));
+  // }
+
+  // private stop(): void {
+  //   window.removeEventListener("storage", this.storageEventListener.bind(this));
+  //   this.onSubject.complete();
+  // }
+  // private storageEventListener(event: StorageEvent) {
+  //   if (event.storageArea == localStorage) {
+  //     let v;
+  //     try { v = JSON.parse(event.newValue); }
+  //     catch (e) { v = event.newValue; }
+  //     this.onSubject.next({ key: event.key, value: v });
+  //     alert(this.onSubject);
+  //   }
+  // }
+
+  // public store(key: string, data: any): void {
+  //   localStorage.setItem(key, JSON.stringify(data));
+  //   // the local application doesn't seem to catch changes to localStorage...
+  //   this.onSubject.next({ key: key, value: data })
+  // }
+
+  // public clear(key) {
+  //   localStorage.removeItem(key);
+  //   // the local application doesn't seem to catch changes to localStorage...
+  //   this.onSubject.next({ key: key, value: null });
+  // }
+
+  // public getStorage() {
+  //   let s = [];
+  //   for (let i = 0; i < localStorage.length; i++) {
+  //     s.push({
+  //       key: localStorage.key(i),
+  //       value: JSON.parse(localStorage.getItem(localStorage.key(i)))
+  //     });
+  //   }
+  //   return s;
+  // }
+
+  ngOnDestroy() {
+    //this.stop();
+  }
+
+  setExistingData(existingData) {
+    this.messageNfcModel.name = existingData.name;
+    this.messageNfcModel.country = existingData.country;
+    this.onCountryChange(this.messageNfcModel.country);
+    this.messageNfcModel.city = existingData.city;
+    this.onCityChange(this.messageNfcModel.city);
+    this.messageNfcModel.hotelId = existingData.hotelId;
+    this.messageNfcModel.wifiName = existingData.wifiName;
+    this.messageNfcModel.wifiPassword = existingData.wifiPassword;
   }
 
   sendMessageToNfc() {

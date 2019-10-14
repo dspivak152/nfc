@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PredefinedDataComponent } from './predefined-data/predefined-data.component';
-
+import { RegisteredDevicesComponent } from './registered-devices/registered-devices.component';
 const routes: Routes = [
     { path: '', redirectTo: '/', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
@@ -14,7 +14,8 @@ const routes: Routes = [
         path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
             { path: 'dashboard', component: DashboardComponent },
             { path: 'register-tray', component: RegisterTrayComponent, canActivate: [AuthGuard] },
-            { path: 'predefine-data', component: PredefinedDataComponent, canActivate: [AuthGuard] }
+            { path: 'predefine-data', component: PredefinedDataComponent, canActivate: [AuthGuard] },
+            { path: 'registered-devices', component: RegisteredDevicesComponent, canActivate: [AuthGuard] }
         ]
     },
     { path: '**', redirectTo: '' }
