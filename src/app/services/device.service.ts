@@ -36,7 +36,7 @@ export class DeviceService {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     })
-    return this.http.get<any>('http://sinfori.com:3080/api/devices', { headers: headers });
+    return this.http.get<any>('http://sinfori.com:3080/api/devices');
   }
 
   handleError<T>(operation = 'operation', result?: T) {

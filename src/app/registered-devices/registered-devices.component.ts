@@ -10,12 +10,12 @@ export class RegisteredDevicesComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.login(null).subscribe(result => {
-      console.log(result);
-      if (result && result.token) {
-        //get devices
-      }
-    });
+    // this.authService.login(null).subscribe(result => {
+    //   console.log(result);
+    //   if (result && result.token) {
+    //     //get devices
+    //   }
+    // });
   }
 
 }
