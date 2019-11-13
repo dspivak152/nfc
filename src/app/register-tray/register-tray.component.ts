@@ -62,19 +62,19 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
     let localStorageData: any = localStorage.getItem('predifinedData');
 
     //If there is stored data but the usee came to an existing tray then the data that will be on the screen us from the tray
-    // if (dataFromTray != undefined && localStorageData != undefined) {
-    //   this.setExistingData(JSON.parse(dataFromTray));
-    // }
+    if (dataFromTray != undefined && localStorageData != undefined) {
+      this.setExistingData(JSON.parse(dataFromTray));
+    }
 
     //set values from tray only
-    // if (dataFromTray != undefined && localStorageData == undefined) {
-    //   this.setExistingData(JSON.parse(dataFromTray));
-    // }
+    if (dataFromTray != undefined && localStorageData == undefined) {
+      this.setExistingData(JSON.parse(dataFromTray));
+    }
 
     //tray from default values
-    // if (dataFromTray == undefined && localStorageData != undefined) {
-    //   this.setExistingData(JSON.parse(localStorageData));
-    // }
+    if (dataFromTray == undefined && localStorageData != undefined) {
+      this.setExistingData(JSON.parse(localStorageData));
+    }
 
     // this.deviceService.getDevices().subscribe(result => {
     //   console.log('devices', result);
