@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Headers } from '@angular/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { RoomAvailable, RoomAvailabiltyResponse } from '../models/index'
 import { catchError } from 'rxjs/operators';
@@ -32,11 +31,11 @@ export class DeviceService {
   }
 
   getDevices(token: string): Observable<any> {
-    const headers = new Headers({
+    var reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    })
-    return this.http.get<any>('http://sinfori.com:3080/api/devices');
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.get<any>('http://sinfori.com:3080/api/devices', { headers: reqHeader });
   }
 
   handleError<T>(operation = 'operation', result?: T) {
