@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DeviceService, AuthService } from '../services/index';
+import { DeviceService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
 import { MessageNfcModel, RoomAvailable } from '../models/index';
 import { WindowRef } from '../WindowRef';
@@ -29,8 +29,7 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private winRef: WindowRef,
     private spinnerService: SpinnerService,
-    public snackBar: MatSnackBar,
-    private authService: AuthService) { }
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
@@ -76,16 +75,6 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
     if (dataFromTray == undefined && localStorageData != undefined) {
       this.setExistingData(JSON.parse(localStorageData));
     }
-
-    this.authService.login({}).subscribe(res => {
-
-      this.deviceService.getDevices(res.token).subscribe(result => {
-        console.log('devices', result);
-      });
-    })
-
-
-
     // this.start();
   }
 
