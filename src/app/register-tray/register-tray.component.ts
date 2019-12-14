@@ -22,6 +22,7 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
   counties: any[] = [];
   messageNfcModel = new MessageNfcModel();
   roomAvailable: RoomAvailable;
+
   private onSubject = new Subject<{ key: string, value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());
 
@@ -75,52 +76,60 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
     if (dataFromTray == undefined && localStorageData != undefined) {
       this.setExistingData(JSON.parse(localStorageData));
     }
-    // this.start();
+    this.start();
   }
 
-  // private start(): void {
-  //   window.addEventListener("storage", this.storageEventListener.bind(this));
-  // }
+  private start(): void {
+    window.addEventListener("storage", this.storageEventListener.bind(this));
+  }
 
-  // private stop(): void {
-  //   window.removeEventListener("storage", this.storageEventListener.bind(this));
-  //   this.onSubject.complete();
-  // }
-  // private storageEventListener(event: StorageEvent) {
-  //   if (event.storageArea == localStorage) {
-  //     let v;
-  //     try { v = JSON.parse(event.newValue); }
-  //     catch (e) { v = event.newValue; }
-  //     this.onSubject.next({ key: event.key, value: v });
-  //     alert(this.onSubject);
-  //   }
-  // }
+  private stop(): void {
+    window.removeEventListener("storage", this.storageEventListener.bind(this));
+    this.onSubject.complete();
+  }
 
-  // public store(key: string, data: any): void {
-  //   localStorage.setItem(key, JSON.stringify(data));
-  //   // the local application doesn't seem to catch changes to localStorage...
-  //   this.onSubject.next({ key: key, value: data })
-  // }
 
-  // public clear(key) {
-  //   localStorage.removeItem(key);
-  //   // the local application doesn't seem to catch changes to localStorage...
-  //   this.onSubject.next({ key: key, value: null });
-  // }
+  private storageEventListener(event: StorageEvent) {
+    if (event.storageArea == localStorage) {
+      let v;
+      try {
+        v = JSON.parse(event.newValue);
+      } catch (e) {
+        v = event.newValue;
+      }
+      this.onSubject.next({ key: event.key, value: v });
+      debugger;
+      this.snackBar.open("data " + this.onSubject, '', { duration: 2000 });
+    }
+  }
 
-  // public getStorage() {
-  //   let s = [];
-  //   for (let i = 0; i < localStorage.length; i++) {
-  //     s.push({
-  //       key: localStorage.key(i),
-  //       value: JSON.parse(localStorage.getItem(localStorage.key(i)))
-  //     });
-  //   }
-  //   return s;
-  // }
+  public store(key: string, data: any): void {
+    debugger;
+    localStorage.setItem(key, JSON.stringify(data));
+    // the local application doesn't seem to catch changes to localStorage...
+    this.onSubject.next({ key: key, value: data })
+  }
+
+  public clear(key) {
+    localStorage.removeItem(key);
+    // the local application doesn't seem to catch changes to localStorage...
+    this.onSubject.next({ key: key, value: null });
+  }
+
+  public getStorage() {
+    let s = [];
+    debugger;
+    for (let i = 0; i < localStorage.length; i++) {
+      s.push({
+        key: localStorage.key(i),
+        value: JSON.parse(localStorage.getItem(localStorage.key(i)))
+      });
+    }
+    return s;
+  }
 
   ngOnDestroy() {
-    //this.stop();
+    this.stop();
   }
 
   setExistingData(existingData) {
