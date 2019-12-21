@@ -98,13 +98,12 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
         v = event.newValue;
       }
       this.onSubject.next({ key: event.key, value: v });
-      debugger;
-      this.snackBar.open("data " + this.onSubject, '', { duration: 2000 });
+      //alert(v);
+      this.snackBar.open("got data", JSON.parse(v));
     }
   }
 
   public store(key: string, data: any): void {
-    debugger;
     localStorage.setItem(key, JSON.stringify(data));
     // the local application doesn't seem to catch changes to localStorage...
     this.onSubject.next({ key: key, value: data })
@@ -118,7 +117,6 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
 
   public getStorage() {
     let s = [];
-    debugger;
     for (let i = 0; i < localStorage.length; i++) {
       s.push({
         key: localStorage.key(i),
