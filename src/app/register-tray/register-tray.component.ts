@@ -14,7 +14,7 @@ import { share } from 'rxjs/operators';
   templateUrl: './register-tray.component.html',
   styleUrls: ['./register-tray.component.scss']
 })
-export class RegisterTrayComponent implements OnInit, OnDestroy {
+export class RegisterTrayComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup;
   hotels: ArraySimpleInterface[] = [];
@@ -59,80 +59,83 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
       this.counties = counties;
     });
 
-    let dataFromTray: any = localStorage.getItem('dataFromTray');
+    //let dataFromTray: any = localStorage.getItem('dataFromTray');
     let localStorageData: any = localStorage.getItem('predifinedData');
-
-    //If there is stored data but the usee came to an existing tray then the data that will be on the screen us from the tray
-    if (dataFromTray != undefined && localStorageData != undefined) {
-      this.setExistingData(JSON.parse(dataFromTray));
-    }
-
-    //set values from tray only
-    if (dataFromTray != undefined && localStorageData == undefined) {
-      this.setExistingData(JSON.parse(dataFromTray));
-    }
-
-    //tray from default values
-    if (dataFromTray == undefined && localStorageData != undefined) {
+    if (localStorageData) {
       this.setExistingData(JSON.parse(localStorageData));
     }
-    this.start();
+
+    //If there is stored data but the usee came to an existing tray then the data that will be on the screen us from the tray
+    // if (dataFromTray != undefined && localStorageData != undefined) {
+    //   this.setExistingData(JSON.parse(dataFromTray));
+    // }
+
+    //set values from tray only
+    // if (dataFromTray != undefined && localStorageData == undefined) {
+    //   this.setExistingData(JSON.parse(dataFromTray));
+    // }
+
+    //tray from default values
+    // if (dataFromTray == undefined && localStorageData != undefined) {
+    //   this.setExistingData(JSON.parse(localStorageData));
+    // }
+    //this.start();
   }
 
-  private start(): void {
-    window.addEventListener("storage", this.storageEventListener.bind(this));
-  }
+  // private start(): void {
+  //   window.addEventListener("storage", this.storageEventListener.bind(this));
+  // }
 
-  private stop(): void {
-    window.removeEventListener("storage", this.storageEventListener.bind(this));
-    this.onSubject.complete();
-  }
+  // private stop(): void {
+  //   window.removeEventListener("storage", this.storageEventListener.bind(this));
+  //   this.onSubject.complete();
+  // }
 
+  // private storageEventListener(event: StorageEvent) {
+  //   if (event.storageArea == localStorage) {
+  //     let v;
+  //     try {
+  //       v = JSON.parse(event.newValue);
+  //     } catch (e) {
+  //       v = event.newValue;
+  //     }
+  //     this.onSubject.next({ key: event.key, value: v });
+  //     //alert(v);
+  //     this.snackBar.open("got data", JSON.parse(v));
+  //   }
+  // }
 
-  private storageEventListener(event: StorageEvent) {
-    if (event.storageArea == localStorage) {
-      let v;
-      try {
-        v = JSON.parse(event.newValue);
-      } catch (e) {
-        v = event.newValue;
-      }
-      this.onSubject.next({ key: event.key, value: v });
-      //alert(v);
-      this.snackBar.open("got data", JSON.parse(v));
-    }
-  }
+  // public store(key: string, data: any): void {
+  //   localStorage.setItem(key, JSON.stringify(data));
+  //   // the local application doesn't seem to catch changes to localStorage...
+  //   this.onSubject.next({ key: key, value: data })
+  // }
 
-  public store(key: string, data: any): void {
-    localStorage.setItem(key, JSON.stringify(data));
-    // the local application doesn't seem to catch changes to localStorage...
-    this.onSubject.next({ key: key, value: data })
-  }
+  // public clear(key) {
+  //   localStorage.removeItem(key);
+  //   // the local application doesn't seem to catch changes to localStorage...
+  //   this.onSubject.next({ key: key, value: null });
+  // }
 
-  public clear(key) {
-    localStorage.removeItem(key);
-    // the local application doesn't seem to catch changes to localStorage...
-    this.onSubject.next({ key: key, value: null });
-  }
+  // public getStorage() {
+  //   let s = [];
+  //   for (let i = 0; i < localStorage.length; i++) {
+  //     s.push({
+  //       key: localStorage.key(i),
+  //       value: JSON.parse(localStorage.getItem(localStorage.key(i)))
+  //     });
+  //   }
+  //   return s;
+  // }
 
-  public getStorage() {
-    let s = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      s.push({
-        key: localStorage.key(i),
-        value: JSON.parse(localStorage.getItem(localStorage.key(i)))
-      });
-    }
-    return s;
-  }
-
-  ngOnDestroy() {
-    this.stop();
-  }
+  // ngOnDestroy() {
+  //   this.stop();
+  // }
 
   setExistingData(existingData) {
     this.messageNfcModel.name = existingData.name;
     this.messageNfcModel.country = existingData.country;
+    this.messageNfcModel.roomId = existingData.roomId;
     this.onCountryChange(this.messageNfcModel.country);
     this.messageNfcModel.city = existingData.city;
     this.onCityChange(this.messageNfcModel.city);
@@ -179,5 +182,13 @@ export class RegisterTrayComponent implements OnInit, OnDestroy {
         this.spinnerService.hide();
       });
     }
+  }
+
+  resetForm() {
+    this.messageNfcModel = new MessageNfcModel();
+  }
+
+  resetRoomNumner() {
+    this.messageNfcModel.roomId = 0;
   }
 }
