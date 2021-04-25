@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DeviceService } from '../services/index';
+import { DeviceService, AuthService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
 import { MessageNfcModel, RoomAvailable } from '../models/index';
 import { WindowRef } from '../WindowRef';
@@ -8,7 +8,6 @@ import { SpinnerService } from '../services/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
-
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
@@ -22,6 +21,7 @@ export class RegisterTrayComponent implements OnInit {
   counties: any[] = [];
   messageNfcModel = new MessageNfcModel();
   roomAvailable: RoomAvailable;
+  resultFromLogin: any;
 
   private onSubject = new Subject<{ key: string, value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());
@@ -30,9 +30,13 @@ export class RegisterTrayComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private winRef: WindowRef,
     private spinnerService: SpinnerService,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    public authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.login({}).subscribe(result => {
+      this.resultFromLogin = result.token;
+    });
 
     this.firstFormGroup = new FormGroup({
       firstCtrl: new FormControl(),
@@ -152,7 +156,7 @@ export class RegisterTrayComponent implements OnInit {
     this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name, this.messageNfcModel.hotelId);
     //this.messageNfcModel.email, this.messageNfcModel.hotelId);
     this.spinnerService.show();
-    this.deviceService.checkRoomAvailabilty(this.roomAvailable).subscribe(result => {
+    this.deviceService.checkRoomAvailabilty(this.roomAvailable, this.resultFromLogin).subscribe(result => {
       this.spinnerService.hide();
       if (result && result.isCreated) {
         this.winRef.nativeWindow.foo(this.messageNfcModel);

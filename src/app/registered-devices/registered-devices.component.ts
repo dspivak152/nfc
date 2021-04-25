@@ -1,9 +1,7 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService, DeviceService } from '../services/index';
 import { MatPaginator, MatSort } from '@angular/material';
-import { merge, Observable, of as observableOf, forkJoin } from 'rxjs';
-import { startWith, switchMap, map, catchError, find } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { Observable, forkJoin } from 'rxjs';
 import { SpinnerService } from '../services/spinner.service';
 import { ArraySimpleInterface } from '../interfaces';
 

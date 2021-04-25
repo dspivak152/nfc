@@ -25,8 +25,13 @@ export class DeviceService {
     return this.http.get<any>('http://sinfori.com:3080/api/locations/cities/' + countryId);
   }
 
-  checkRoomAvailabilty(newRoom: RoomAvailable): Observable<RoomAvailabiltyResponse> {
-    return this.http.post<RoomAvailabiltyResponse>('http://sinfori.com:3080/api/devices', newRoom).pipe(
+  checkRoomAvailabilty(newRoom: RoomAvailable, token: string): Observable<RoomAvailabiltyResponse> {
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    });
+
+    return this.http.post<RoomAvailabiltyResponse>('http://sinfori.com:3080/api/devices', newRoom, { headers: reqHeader }).pipe(
       catchError(this.handleError<any>('Unable to create new room')));;
   }
 
