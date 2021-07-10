@@ -7,7 +7,7 @@ import { WindowRef } from '../WindowRef';
 import { SpinnerService } from '../services/spinner.service';
 import { MatSnackBar } from '@angular/material';
 import { Subject } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { map, share, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
@@ -22,6 +22,7 @@ export class RegisterTrayComponent implements OnInit {
   messageNfcModel = new MessageNfcModel();
   roomAvailable: RoomAvailable;
   resultFromLogin: any;
+  heroes: any;
 
   private onSubject = new Subject<{ key: string, value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());
@@ -37,6 +38,8 @@ export class RegisterTrayComponent implements OnInit {
     this.authService.login({}).subscribe(result => {
       this.resultFromLogin = result.token;
     });
+
+    this.getHeroes();
 
     this.firstFormGroup = new FormGroup({
       firstCtrl: new FormControl(),
@@ -59,9 +62,10 @@ export class RegisterTrayComponent implements OnInit {
       wifiNameCtrl: ['', Validators.required],
       wifiPasswordCtrl: ['', Validators.required]
     });
-    this.deviceService.getCountries().subscribe(counties => {
-      this.counties = counties;
-    });
+
+    // this.deviceService.getCountries().pipe(map(data => {
+    //   this.counties = data;
+    // })).subscribe();
 
     //let dataFromTray: any = localStorage.getItem('dataFromTray');
     let localStorageData: any = localStorage.getItem('predifinedData');
@@ -84,6 +88,11 @@ export class RegisterTrayComponent implements OnInit {
     //   this.setExistingData(JSON.parse(localStorageData));
     // }
     //this.start();
+  }
+
+  getHeroes(): void {
+    this.deviceService.getHeroes()
+      .subscribe(data => this.counties = data);
   }
 
   // private start(): void {
@@ -154,7 +163,6 @@ export class RegisterTrayComponent implements OnInit {
       return false;
     }
     this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name, this.messageNfcModel.hotelId);
-    //this.messageNfcModel.email, this.messageNfcModel.hotelId);
     this.spinnerService.show();
     this.deviceService.checkRoomAvailabilty(this.roomAvailable, this.resultFromLogin).subscribe(result => {
       this.spinnerService.hide();

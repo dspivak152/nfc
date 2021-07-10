@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { RoomAvailable, RoomAvailabiltyResponse } from '../models/index'
-import { catchError } from 'rxjs/operators';
+import { RoomAvailable, RoomAvailabiltyResponse, GenericModel } from '../models/index'
+import { catchError, tap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +16,20 @@ export class DeviceService {
     return this.http.get<any>('http://sinfori.com:3080/api/hotels');
   }
 
-  getCountries(): Observable<any> {
-    return this.http.get<any>('http://sinfori.com:3080/api/locations/countries');
+  getCountries(): Observable<GenericModel[]> {
+    return this.http.get<GenericModel[]>('http://sinfori.com:3080/api/locations/countries')
+  }
+
+  getHeroes(): Observable<GenericModel[]> {
+    return this.http.get<GenericModel[]>('http://sinfori.com:3080/api/locations/countries')
+      .pipe(
+        tap(_ => this.log('fetched heroes')),
+        catchError(this.handleError<GenericModel[]>('getHeroes', []))
+      );
+  }
+
+  private log(message: string) {
+    console.log(`HeroService: ${message}`);
   }
 
   getCities(countryId: number): Observable<any> {
