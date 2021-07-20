@@ -9,7 +9,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class HomeComponent implements OnDestroy, OnInit {
   mobileQuery: MediaQueryList;
-  @ViewChild('snav') drawer: MatSidenav;
+  @ViewChild('snav', { static: true }) drawer: MatSidenav;
   private _mobileQueryListener: () => void;
   constructor(changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher, private router: Router) {

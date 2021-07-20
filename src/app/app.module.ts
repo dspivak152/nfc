@@ -8,7 +8,6 @@ import { RegisterTrayComponent } from './register-tray/register-tray.component';
 import { AuthService, AuthGuardService, DeviceService } from './services/index';
 import { JwtModule, JwtHelperService, JwtModuleOptions } from '@auth0/angular-jwt';
 import { HomeComponent } from './home/home.component';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { MaterialModule } from './material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -43,7 +42,7 @@ const JWT_Module_Options: JwtModuleOptions = {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule,
+    HttpClientModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,

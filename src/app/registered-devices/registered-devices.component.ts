@@ -17,8 +17,8 @@ export class RegisteredDevicesComponent implements OnInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   dataSource: any[] = [];
   devicesResult: any[] = [];
   displayedColumns: string[] = ['created', 'hotelId', 'name', 'roomNumber'];
