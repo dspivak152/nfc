@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
 import { RegisterTrayComponent } from './register-tray/register-tray.component';
 import { AuthService, AuthGuardService, DeviceService } from './services/index';
 import { JwtModule, JwtHelperService, JwtModuleOptions } from '@auth0/angular-jwt';
@@ -31,7 +30,6 @@ const JWT_Module_Options: JwtModuleOptions = {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     RegisterTrayComponent,
     HomeComponent,
     DashboardComponent,
