@@ -39,7 +39,7 @@ export class RegisterTrayComponent implements OnInit {
       this.resultFromLogin = result.token;
     });
 
-    this.getHeroes();
+    this.getCountries();
 
     this.firstFormGroup = new FormGroup({
       firstCtrl: new FormControl(),
@@ -62,10 +62,6 @@ export class RegisterTrayComponent implements OnInit {
       wifiNameCtrl: ['', Validators.required],
       wifiPasswordCtrl: ['', Validators.required]
     });
-
-    // this.deviceService.getCountries().pipe(map(data => {
-    //   this.counties = data;
-    // })).subscribe();
 
     //let dataFromTray: any = localStorage.getItem('dataFromTray');
     let localStorageData: any = localStorage.getItem('predifinedData');
@@ -90,8 +86,8 @@ export class RegisterTrayComponent implements OnInit {
     //this.start();
   }
 
-  getHeroes(): void {
-    this.deviceService.getHeroes()
+  getCountries(): void {
+    this.deviceService.getCountries()
       .subscribe(data => this.counties = data);
   }
 

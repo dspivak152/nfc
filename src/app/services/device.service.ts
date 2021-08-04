@@ -18,18 +18,14 @@ export class DeviceService {
 
   getCountries(): Observable<GenericModel[]> {
     return this.http.get<GenericModel[]>('http://sinfori.com:3080/api/locations/countries')
-  }
-
-  getHeroes(): Observable<GenericModel[]> {
-    return this.http.get<GenericModel[]>('http://sinfori.com:3080/api/locations/countries')
       .pipe(
-        tap(_ => this.log('fetched heroes')),
+        tap(_ => this.log('fetched countries')),
         catchError(this.handleError<GenericModel[]>('getHeroes', []))
       );
   }
 
   private log(message: string) {
-    console.log(`HeroService: ${message}`);
+    console.log(`deviceService: ${message}`);
   }
 
   getCities(countryId: number): Observable<any> {
