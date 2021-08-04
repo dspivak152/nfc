@@ -4,7 +4,7 @@ import { MessageNfcModel } from '../models/messageNfcModel';
 import { ArraySimpleInterface } from '../interfaces';
 import { DeviceService } from '../services/index';
 import { SpinnerService } from '../services/spinner.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-predefined-data',

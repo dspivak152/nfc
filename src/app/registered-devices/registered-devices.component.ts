@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService, DeviceService } from '../services/index';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { Observable, forkJoin } from 'rxjs';
 import { SpinnerService } from '../services/spinner.service';
 import { ArraySimpleInterface } from '../interfaces';

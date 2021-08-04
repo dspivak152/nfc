@@ -5,7 +5,7 @@ import { ArraySimpleInterface } from '../interfaces/index';
 import { MessageNfcModel, RoomAvailable } from '../models/index';
 import { WindowRef } from '../WindowRef';
 import { SpinnerService } from '../services/spinner.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { map, share, tap } from 'rxjs/operators';
 @Component({
