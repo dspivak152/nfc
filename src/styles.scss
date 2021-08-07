@@ -1,28 +1,25 @@
-// @import '~@angular/material/theming';
+@use '~@angular/material' as mat;
+@import '~@angular/material/theming';
 
-// @use '~@angular/material' as mat;
+@include mat.core();
 
-// @include mat.core();
+$custom-primary: mat.define-palette(mat.$orange-palette);
+$custom-accent:  mat.define-palette(mat.$orange-palette);
 
-// $custom-primary: mat.define-palette(mat.$orange-palette);
-// $custom-accent:  mat.define-palette(mat.$orange-palette);
+$custom-theme: mat.define-dark-theme($custom-primary, $custom-accent);
 
-// $custom-theme: mat.define-dark-theme($custom-primary, $custom-accent);
+@include mat.all-component-themes($custom-theme);
 
-// @include mat.all-component-themes($custom-theme);
-
-// body { 
-//     font-family: Roboto, Arial, sans-serif;
-//     margin: 0;
-//   }
+body { 
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+  }
   
-//   .basic-container {
-//     padding: 30px;
-//   }
+  .basic-container {
+    padding: 30px;
+  }
   
-//   .version-info {
-//     font-size: 8pt;
-//     float: right;
-//   }
-
-  
+  .version-info {
+    font-size: 8pt;
+    float: right;
+  }
