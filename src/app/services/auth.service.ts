@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +16,6 @@ export class AuthService {
   public isAutheticated(): boolean {
     const token = localStorage.getItem('token');
     return true;
-    //return !this.jwtHelper.isTokenExpired(token);
   }
 
   login(loginObject: any) {

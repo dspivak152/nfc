@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ChangeDetectorRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -7,7 +7,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnDestroy, OnInit {
+export class HomeComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
   @ViewChild('snav', { static: true }) drawer: MatSidenav;
   private _mobileQueryListener: () => void;
@@ -20,10 +20,6 @@ export class HomeComponent implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
-
-  ngOnInit() {
-    //this.router.navigate(['/dashboard']);
   }
 
   public toggleSidenav() {

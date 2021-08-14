@@ -3,7 +3,6 @@ export class MessageNfcModel {
     email: string;
     country: number;
     city: number;
-    //hotelId: number;
     hotelId: number;
     wifiName: string;
     wifiPassword: string;
