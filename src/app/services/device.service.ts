@@ -51,7 +51,7 @@ export class DeviceService {
       'Authorization': 'Bearer ' + token
     });
     return this.httpAdapterService.get<any>(API_BASE_URL + '/devices', { headers: reqHeader })
-    //return this.http.get<any>('http://sinfori.com:3080/api/devices', { headers: reqHeader });
+    //return this.http.get<any>(API_BASE_URL + '/devices', { headers: reqHeader });
   }
 
   handleError<T>(operation = 'operation', result?: T) {

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class HttpAdapterService {
 
-  constructor(private httpClient: HttpClient,) { }
+  constructor(private httpClient: HttpClient) { }
 
   patch<T>(url: string, body: any): Promise<T> {
     return this.httpClient.patch<T>(url, body).toPromise();
@@ -17,6 +18,7 @@ export class HttpAdapterService {
   }
 
   get<T>(url: string, reqHeader?: any): Observable<T> {
-    return this.httpClient.get<T>(url, { headers: reqHeader });
+    console.log('reqHeader', reqHeader)
+    return this.httpClient.get<T>(url, { headers: reqHeader }).pipe(tap(x => console.log(x)));
   }
 }
