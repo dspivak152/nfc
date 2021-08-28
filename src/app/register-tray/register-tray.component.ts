@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceService, AuthService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
 import { MessageNfcModel, RoomAvailable } from '../models/index';
@@ -7,7 +7,8 @@ import { WindowRef } from '../WindowRef';
 import { SpinnerService } from '../services/spinner.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
-import { map, share, tap } from 'rxjs/operators';
+import { share } from 'rxjs/operators';
+import { validateNumberPositive } from '../utils/utilityFunctions';
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
@@ -27,7 +28,6 @@ export class RegisterTrayComponent implements OnInit {
   public changes = this.onSubject.asObservable().pipe(share());
 
   constructor(private deviceService: DeviceService,
-    private _formBuilder: FormBuilder,
     private winRef: WindowRef,
     private spinnerService: SpinnerService,
     public snackBar: MatSnackBar,
@@ -67,7 +67,7 @@ export class RegisterTrayComponent implements OnInit {
       countryCtrl: new FormControl('', [Validators.required]),
       cityCtrl: new FormControl('', [Validators.required]),
       hotelCtrl: new FormControl('', [Validators.required]),
-      roomId: new FormControl('', [Validators.required]),
+      roomId: new FormControl('', [Validators.required, validateNumberPositive]),
       lightSensitivity: new FormControl('', [Validators.required, Validators.max(1023), Validators.min(0)]),
       wifiNameCtrl: new FormControl('', [Validators.required]),
       wifiPasswordCtrl: new FormControl('', [Validators.required])
@@ -160,7 +160,7 @@ export class RegisterTrayComponent implements OnInit {
         this.winRef.nativeWindow.foo(this.messageNfcModel);
       } else {
         //stepper.previous();
-        this.snackBar.open("Error creating new room", '', { duration: 2000 });
+        this.snackBar.open("Error creating new room", '', { duration: 4000 });
         return false;
       }
     });
