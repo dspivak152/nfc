@@ -14,7 +14,6 @@ import { map, share, tap } from 'rxjs/operators';
   styleUrls: ['./register-tray.component.scss']
 })
 export class RegisterTrayComponent implements OnInit {
-  isLinear = false;
   firstFormGroup: FormGroup;
   hotels: ArraySimpleInterface[] = [];
   cities: string[] = [];
@@ -35,33 +34,9 @@ export class RegisterTrayComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.login({}).subscribe(result => {
-      this.resultFromLogin = result.token;
-    });
-
+    this.getAuthToken();
     this.getCountries();
-
-    this.firstFormGroup = new FormGroup({
-      firstCtrl: new FormControl(),
-      countryCtrl: new FormControl(),
-      cityCtrl: new FormControl(),
-      hotelCtrl: new FormControl(),
-      roomId: new FormControl(),
-      lightSensitivity: new FormControl(),
-      wifiNameCtrl: new FormControl(),
-      wifiPasswordCtrl: new FormControl()
-    });
-
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
-      countryCtrl: ['', Validators.required],
-      cityCtrl: ['', Validators.required],
-      hotelCtrl: ['', Validators.required],
-      roomId: ['', Validators.required],
-      lightSensitivity: ['', [Validators.required, Validators.max(1023), Validators.min(0)]],
-      wifiNameCtrl: ['', Validators.required],
-      wifiPasswordCtrl: ['', Validators.required]
-    });
+    this.initializeForm();
 
     //let dataFromTray: any = localStorage.getItem('dataFromTray');
     let localStorageData: any = localStorage.getItem('predifinedData');
@@ -86,6 +61,25 @@ export class RegisterTrayComponent implements OnInit {
     //this.start();
   }
 
+  initializeForm() {
+    this.firstFormGroup = new FormGroup({
+      firstCtrl: new FormControl('', [Validators.required]),
+      countryCtrl: new FormControl('', [Validators.required]),
+      cityCtrl: new FormControl('', [Validators.required]),
+      hotelCtrl: new FormControl('', [Validators.required]),
+      roomId: new FormControl('', [Validators.required]),
+      lightSensitivity: new FormControl('', [Validators.required, Validators.max(1023), Validators.min(0)]),
+      wifiNameCtrl: new FormControl('', [Validators.required]),
+      wifiPasswordCtrl: new FormControl('', [Validators.required])
+    });
+  }
+
+  getAuthToken() {
+    this.authService.login({}).subscribe(result => {
+      this.resultFromLogin = result.token;
+    });
+
+  }
   getCountries(): void {
     this.deviceService.getCountries()
       .subscribe(data => this.counties = data);
