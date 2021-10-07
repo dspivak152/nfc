@@ -18,7 +18,6 @@ export class HttpAdapterService {
   }
 
   get<T>(url: string, reqHeader?: any): Observable<T> {
-    console.log('reqHeader', reqHeader)
-    return this.httpClient.get<T>(url, { headers: reqHeader }).pipe(tap(x => console.log(x)));
+    return this.httpClient.get<T>(url, { headers: reqHeader });
   }
 }

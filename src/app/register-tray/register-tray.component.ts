@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceService, AuthService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { validateNumberPositive } from '../utils/utilityFunctions';
+import { SnackbarNfcDataComponent } from '../snackbar-nfc-data/snackbar-nfc-data.component';
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
@@ -22,7 +23,7 @@ export class RegisterTrayComponent implements OnInit {
   messageNfcModel = new MessageNfcModel();
   roomAvailable: RoomAvailable;
   resultFromLogin: any;
-  heroes: any;
+  currentTrayTagId: string;
 
   private onSubject = new Subject<{ key: string, value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());
@@ -38,27 +39,12 @@ export class RegisterTrayComponent implements OnInit {
     this.getCountries();
     this.initializeForm();
 
-    //let dataFromTray: any = localStorage.getItem('dataFromTray');
-    let localStorageData: any = localStorage.getItem('predifinedData');
+    let localStorageData: any = localStorage.getItem('nfcData');
+    this.currentTrayTagId = JSON.parse(localStorageData).tagId;
+
     if (localStorageData) {
-      this.setExistingData(JSON.parse(localStorageData));
+      this.setNfcDataForDisplay(JSON.parse(localStorageData).existingData);
     }
-
-    //If there is stored data but the usee came to an existing tray then the data that will be on the screen us from the tray
-    // if (dataFromTray != undefined && localStorageData != undefined) {
-    //   this.setExistingData(JSON.parse(dataFromTray));
-    // }
-
-    //set values from tray only
-    // if (dataFromTray != undefined && localStorageData == undefined) {
-    //   this.setExistingData(JSON.parse(dataFromTray));
-    // }
-
-    //tray from default values
-    // if (dataFromTray == undefined && localStorageData != undefined) {
-    //   this.setExistingData(JSON.parse(localStorageData));
-    // }
-    //this.start();
   }
 
   initializeForm() {
@@ -74,66 +60,26 @@ export class RegisterTrayComponent implements OnInit {
     });
   }
 
+  setNfcDataForDisplay(localStorageData: any) {
+    let dataFromTagToParse: any = JSON.parse(localStorageData);
+    let tempCountry = this.counties.find(country => country.Id == dataFromTagToParse.country);
+
+    this.snackBar.openFromComponent(SnackbarNfcDataComponent, {
+      data: dataFromTagToParse
+    });
+  }
+
   getAuthToken() {
     this.authService.login({}).subscribe(result => {
       this.resultFromLogin = result.token;
     });
 
   }
+
   getCountries(): void {
     this.deviceService.getCountries()
       .subscribe(data => this.counties = data);
   }
-
-  // private start(): void {
-  //   window.addEventListener("storage", this.storageEventListener.bind(this));
-  // }
-
-  // private stop(): void {
-  //   window.removeEventListener("storage", this.storageEventListener.bind(this));
-  //   this.onSubject.complete();
-  // }
-
-  // private storageEventListener(event: StorageEvent) {
-  //   if (event.storageArea == localStorage) {
-  //     let v;
-  //     try {
-  //       v = JSON.parse(event.newValue);
-  //     } catch (e) {
-  //       v = event.newValue;
-  //     }
-  //     this.onSubject.next({ key: event.key, value: v });
-  //     //alert(v);
-  //     this.snackBar.open("got data", JSON.parse(v));
-  //   }
-  // }
-
-  // public store(key: string, data: any): void {
-  //   localStorage.setItem(key, JSON.stringify(data));
-  //   // the local application doesn't seem to catch changes to localStorage...
-  //   this.onSubject.next({ key: key, value: data })
-  // }
-
-  // public clear(key) {
-  //   localStorage.removeItem(key);
-  //   // the local application doesn't seem to catch changes to localStorage...
-  //   this.onSubject.next({ key: key, value: null });
-  // }
-
-  // public getStorage() {
-  //   let s = [];
-  //   for (let i = 0; i < localStorage.length; i++) {
-  //     s.push({
-  //       key: localStorage.key(i),
-  //       value: JSON.parse(localStorage.getItem(localStorage.key(i)))
-  //     });
-  //   }
-  //   return s;
-  // }
-
-  // ngOnDestroy() {
-  //   this.stop();
-  // }
 
   setExistingData(existingData) {
     this.messageNfcModel.name = existingData.name;
@@ -152,14 +98,18 @@ export class RegisterTrayComponent implements OnInit {
       this.snackBar.open("Please enter a valid number for the light sensitivity", '', { duration: 2000 });
       return false;
     }
-    this.roomAvailable = new RoomAvailable(this.messageNfcModel.roomId, this.messageNfcModel.name, this.messageNfcModel.hotelId);
+    this.roomAvailable = new RoomAvailable(
+      this.messageNfcModel.roomId,
+      this.messageNfcModel.name,
+      this.messageNfcModel.hotelId,
+      this.currentTrayTagId
+    );
     this.spinnerService.show();
     this.deviceService.checkRoomAvailabilty(this.roomAvailable, this.resultFromLogin).subscribe(result => {
       this.spinnerService.hide();
       if (result && result.isCreated) {
         this.winRef.nativeWindow.foo(this.messageNfcModel);
       } else {
-        //stepper.previous();
         this.snackBar.open("Error creating new room", '', { duration: 4000 });
         return false;
       }
@@ -167,7 +117,7 @@ export class RegisterTrayComponent implements OnInit {
   }
 
   onCountryChange(countryId: number) {
-    if (countryId > 0) {
+    if (countryId != 0) {
       this.spinnerService.show();
       this.deviceService.getCities(countryId).subscribe(cities => {
         this.cities = cities;
@@ -177,7 +127,7 @@ export class RegisterTrayComponent implements OnInit {
   }
 
   onCityChange(cityId: number) {
-    if (cityId > 0) {
+    if (cityId != 0) {
       this.spinnerService.show();
       this.deviceService.getHotels().subscribe(hotels => {
         this.hotels = hotels;

@@ -22,7 +22,7 @@ export class DeviceService {
   getCountries(): Observable<GenericModel[]> {
     return this.httpAdapterService.get<any>(API_BASE_URL + '/locations/countries')
       .pipe(
-        tap(_ => this.log('fetched countries')),
+        // tap(_ => this.log('fetched countries')),
         catchError(this.handleError<GenericModel[]>('getHeroes', []))
       );
   }
@@ -40,7 +40,9 @@ export class DeviceService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + token
     });
-    return this.httpAdapterService.post<any>(API_BASE_URL + '/devices', newRoom, reqHeader).pipe(catchError(this.handleError<any>('Unable to create new room')));
+    return this.httpAdapterService.post<any>(API_BASE_URL + '/devices', newRoom, reqHeader).pipe(
+      catchError(this.handleError<any>('Unable to create new room'))
+    );
     // return this.http.post<RoomAvailabiltyResponse>('http://sinfori.com:3080/api/devices', newRoom, { headers: reqHeader }).pipe(
     //   catchError(this.handleError<any>('Unable to create new room')));;
   }
