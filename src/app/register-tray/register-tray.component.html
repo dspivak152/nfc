@@ -24,7 +24,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-select placeholder="Hotel Name" [ngModelOptions]="{standalone: true}" *ngIf="hotels"
-      [(ngModel)]="messageNfcModel.hotelId">
+      [(ngModel)]="messageNfcModel.hotelId" #hotelSelect (ngModelChange)="onHotelChange(hotelSelect.value)">
       <mat-option *ngFor="let hotel of hotels" [value]="hotel.id">
         {{hotel.name}}
       </mat-option>

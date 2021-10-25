@@ -18,12 +18,15 @@ import { SnackbarNfcDataComponent } from '../snackbar-nfc-data/snackbar-nfc-data
 export class RegisterTrayComponent implements OnInit {
   firstFormGroup: FormGroup;
   hotels: ArraySimpleInterface[] = [];
-  cities: string[] = [];
+  cities: any[] = [];
   counties: any[] = [];
   messageNfcModel = new MessageNfcModel();
   roomAvailable: RoomAvailable;
   resultFromLogin: any;
   currentTrayTagId: string;
+  localCountry: string;
+  localCity: string;
+  localHotel: string;
 
   private onSubject = new Subject<{ key: string, value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());
@@ -36,15 +39,8 @@ export class RegisterTrayComponent implements OnInit {
 
   ngOnInit() {
     this.getAuthToken();
-    this.getCountries();
     this.initializeForm();
-
-    let localStorageData: any = localStorage.getItem('nfcData');
-    this.currentTrayTagId = JSON.parse(localStorageData).tagId;
-
-    if (localStorageData) {
-      this.setNfcDataForDisplay(JSON.parse(localStorageData).existingData);
-    }
+    this.getCountries();
   }
 
   initializeForm() {
@@ -60,10 +56,13 @@ export class RegisterTrayComponent implements OnInit {
     });
   }
 
-  setNfcDataForDisplay(localStorageData: any) {
-    let dataFromTagToParse: any = JSON.parse(localStorageData);
-    let tempCountry = this.counties.find(country => country.Id == dataFromTagToParse.country);
-
+  setNfcDataForDisplay() {
+    let localStorageData: any = localStorage.getItem('nfcData');
+    this.currentTrayTagId = JSON.parse(localStorageData).tagId;
+    let dataFromTagToParse: any = JSON.parse(JSON.parse(localStorageData).existingData);
+    dataFromTagToParse.country = dataFromTagToParse.names[0];
+    dataFromTagToParse.city = dataFromTagToParse.names[1];
+    dataFromTagToParse.hotel = dataFromTagToParse.names[2];
     this.snackBar.openFromComponent(SnackbarNfcDataComponent, {
       data: dataFromTagToParse
     });
@@ -78,7 +77,10 @@ export class RegisterTrayComponent implements OnInit {
 
   getCountries(): void {
     this.deviceService.getCountries()
-      .subscribe(data => this.counties = data);
+      .subscribe(data => {
+        this.counties = data;
+        this.setNfcDataForDisplay();
+      });
   }
 
   setExistingData(existingData) {
@@ -102,8 +104,10 @@ export class RegisterTrayComponent implements OnInit {
       this.messageNfcModel.roomId,
       this.messageNfcModel.name,
       this.messageNfcModel.hotelId,
-      this.currentTrayTagId
+      this.currentTrayTagId,
+      [this.localCountry, this.localCity, this.localHotel]
     );
+
     this.spinnerService.show();
     this.deviceService.checkRoomAvailabilty(this.roomAvailable, this.resultFromLogin).subscribe(result => {
       this.spinnerService.hide();
@@ -116,23 +120,33 @@ export class RegisterTrayComponent implements OnInit {
     });
   }
 
-  onCountryChange(countryId: number) {
+  onCountryChange(countryId: number): any {
     if (countryId != 0) {
       this.spinnerService.show();
+      this.localCountry = this.counties.find(country => country.id == countryId).name;
       this.deviceService.getCities(countryId).subscribe(cities => {
         this.cities = cities;
         this.spinnerService.hide();
+        return this.cities;
       });
     }
   }
 
   onCityChange(cityId: number) {
     if (cityId != 0) {
+      this.localCity = this.cities.find(city => city.id == cityId).name;
       this.spinnerService.show();
       this.deviceService.getHotels().subscribe(hotels => {
         this.hotels = hotels;
         this.spinnerService.hide();
       });
+    }
+  }
+
+  onHotelChange(hotelId: number) {
+    if (hotelId != 0) {
+      //@ts-ignore
+      this.localHotel = this.hotels.find(hotel => hotel.id == hotelId).name;
     }
   }
 
