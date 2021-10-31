@@ -52,21 +52,17 @@ export class RegisterTrayComponent implements OnInit {
       roomId: new FormControl('', [Validators.required, validateNumberPositive]),
       lightSensitivity: new FormControl('', [Validators.required, Validators.max(1023), Validators.min(0)]),
       wifiNameCtrl: new FormControl('', [Validators.required]),
-      wifiPasswordCtrl: new FormControl('', [Validators.required])
+      wifiPasswordCtrl: new FormControl('', [Validators.required]),
+      deviceId: new FormControl('')
     });
   }
 
   setNfcDataForDisplay() {
     let localStorageData: any = localStorage.getItem('nfcData');
     this.currentTrayTagId = JSON.parse(localStorageData).tagId;
+    this.currentTrayTagId = this.currentTrayTagId.toUpperCase();
     let dataFromTagToParse: any = JSON.parse(JSON.parse(localStorageData).existingData);
     this.setExistingData(dataFromTagToParse);
-    // dataFromTagToParse.country = dataFromTagToParse.names[0];
-    // dataFromTagToParse.city = dataFromTagToParse.names[1];
-    // dataFromTagToParse.hotel = dataFromTagToParse.names[2];
-    // this.snackBar.openFromComponent(SnackbarNfcDataComponent, {
-    //   data: dataFromTagToParse
-    // });
   }
 
   getAuthToken() {
@@ -94,6 +90,7 @@ export class RegisterTrayComponent implements OnInit {
     this.messageNfcModel.hotelId = existingData.hotelId;
     this.messageNfcModel.wifiName = existingData.wifiName;
     this.messageNfcModel.wifiPassword = existingData.wifiPassword;
+    this.messageNfcModel.deviceId = this.currentTrayTagId;
   }
 
   sendMessageToNfc() {

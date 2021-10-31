@@ -46,6 +46,10 @@
     <input matInput placeholder="Password" formControlName="wifiPasswordCtrl" required
       [(ngModel)]="messageNfcModel.wifiPassword">
   </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Device-ID" formControlName="deviceId" readonly [(ngModel)]="messageNfcModel.deviceId">
+  </mat-form-field>
   <div>
     <button mat-button (click)="sendMessageToNfc()">Register</button>
     <button mat-button (click)="resetForm()">Reset</button>
