@@ -9,4 +9,5 @@ export class MessageNfcModel {
     roomId: number;
     lightSensitivity: number = 420;
     deviceId: string;
+    deviceType: string;
 }

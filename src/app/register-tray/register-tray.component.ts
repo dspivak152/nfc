@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DeviceService, AuthService } from '../services/index';
 import { ArraySimpleInterface } from '../interfaces/index';
@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { validateNumberPositive } from '../utils/utilityFunctions';
-import { SnackbarNfcDataComponent } from '../snackbar-nfc-data/snackbar-nfc-data.component';
+import { DeviceType, deviceTypesMapping } from '../enums/deviceType'
 @Component({
   selector: 'app-register-tray',
   templateUrl: './register-tray.component.html',
@@ -27,6 +27,9 @@ export class RegisterTrayComponent implements OnInit {
   localCountry: string;
   localCity: string;
   localHotel: string;
+
+  public deviceTypesMapping = deviceTypesMapping;
+  public deviceTypes = Object.values(DeviceType);
 
   private onSubject = new Subject<{ key: string, value: any }>();
   public changes = this.onSubject.asObservable().pipe(share());
@@ -85,12 +88,12 @@ export class RegisterTrayComponent implements OnInit {
     this.messageNfcModel.country = existingData.country;
     this.messageNfcModel.roomId = existingData.roomId;
     this.onCountryChange(this.messageNfcModel.country, existingData.city);
-    //this.messageNfcModel.city = existingData.city;
     this.onCityChange(this.messageNfcModel.city);
     this.messageNfcModel.hotelId = existingData.hotelId;
     this.messageNfcModel.wifiName = existingData.wifiName;
     this.messageNfcModel.wifiPassword = existingData.wifiPassword;
     this.messageNfcModel.deviceId = this.currentTrayTagId;
+    this.messageNfcModel.deviceType = existingData.deviceType;
   }
 
   sendMessageToNfc() {
@@ -103,7 +106,8 @@ export class RegisterTrayComponent implements OnInit {
       this.messageNfcModel.name,
       this.messageNfcModel.hotelId,
       this.currentTrayTagId,
-      [this.localCountry, this.localCity, this.localHotel]
+      [this.localCountry, this.localCity, this.localHotel],
+      this.messageNfcModel.deviceType
     );
 
     this.spinnerService.show();

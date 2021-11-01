@@ -48,6 +48,15 @@
   </mat-form-field>
 
   <mat-form-field>
+    <mat-select placeholder="Device Type" [ngModelOptions]="{standalone: true}"
+      [(ngModel)]="messageNfcModel.deviceType">
+      <mat-option *ngFor="let fileType of deviceTypes" [value]="fileType">
+        {{deviceTypesMapping[fileType]}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
     <input matInput placeholder="Device-ID" formControlName="deviceId" readonly [(ngModel)]="messageNfcModel.deviceId">
   </mat-form-field>
   <div>

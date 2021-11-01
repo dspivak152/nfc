@@ -3,13 +3,15 @@ export class RoomAvailable {
         name: string,
         hotelId: number,
         deviceId: string,
-        names: string[]) {
+        names: string[],
+        deviceType: string) {
 
         this.roomNumber = roomNumber;
         this.name = name;
         this.hotelId = hotelId;
         this.deviceId = deviceId;
         this.names = names;
+        this.deviceType = deviceType;
     }
 
     roomNumber: number;
@@ -17,4 +19,5 @@ export class RoomAvailable {
     hotelId: number;
     deviceId: string;
     names: string[];
+    deviceType: string;
 }
