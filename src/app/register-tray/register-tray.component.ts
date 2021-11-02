@@ -64,7 +64,13 @@ export class RegisterTrayComponent implements OnInit {
     let localStorageData: any = localStorage.getItem('nfcData');
     this.currentTrayTagId = JSON.parse(localStorageData).tagId;
     this.currentTrayTagId = this.currentTrayTagId.toUpperCase();
-    let dataFromTagToParse: any = JSON.parse(JSON.parse(localStorageData).existingData);
+    let dataFromTagToParse: any = {};
+    try {
+      dataFromTagToParse = JSON.parse(JSON.parse(localStorageData).existingData);
+    }
+    catch (e) {
+      dataFromTagToParse = {}
+    }
     this.setExistingData(dataFromTagToParse);
   }
 
@@ -87,8 +93,10 @@ export class RegisterTrayComponent implements OnInit {
     this.messageNfcModel.name = existingData.name;
     this.messageNfcModel.country = existingData.country;
     this.messageNfcModel.roomId = existingData.roomId;
-    this.onCountryChange(this.messageNfcModel.country, existingData.city);
-    this.onCityChange(this.messageNfcModel.city);
+    if (this.messageNfcModel.country != undefined) {
+      this.onCountryChange(this.messageNfcModel.country, existingData.city);
+      this.onCityChange(this.messageNfcModel.city);
+    }
     this.messageNfcModel.hotelId = existingData.hotelId;
     this.messageNfcModel.wifiName = existingData.wifiName;
     this.messageNfcModel.wifiPassword = existingData.wifiPassword;
