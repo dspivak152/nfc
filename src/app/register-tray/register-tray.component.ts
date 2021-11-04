@@ -114,7 +114,6 @@ export class RegisterTrayComponent implements OnInit {
       this.messageNfcModel.name,
       this.messageNfcModel.hotelId,
       this.currentTrayTagId,
-      [this.localCountry, this.localCity, this.localHotel],
       this.messageNfcModel.deviceType
     );
 
