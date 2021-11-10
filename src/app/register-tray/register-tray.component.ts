@@ -162,9 +162,22 @@ export class RegisterTrayComponent implements OnInit {
 
   resetForm() {
     this.messageNfcModel = new MessageNfcModel();
+    localStorage.removeItem('nfcData');
   }
 
   resetRoomNumner() {
     this.messageNfcModel.roomId = 0;
   }
+
+  // setDataInNFC() {
+  //   this.roomAvailable = new RoomAvailable(
+  //     this.messageNfcModel.roomId,
+  //     this.messageNfcModel.name,
+  //     this.messageNfcModel.hotelId,
+  //     this.currentTrayTagId,
+  //     this.messageNfcModel.deviceType
+  //   );
+
+  //   this.winRef.nativeWindow.foo({ danny: "test" });
+  // }
 }
