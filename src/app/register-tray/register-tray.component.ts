@@ -23,7 +23,7 @@ export class RegisterTrayComponent implements OnInit {
   messageNfcModel = new MessageNfcModel();
   roomAvailable: RoomAvailable;
   resultFromLogin: any;
-  currentTrayTagId: string;
+  currentTrayTagId: string = '';
   localCountry: string;
   localCity: string;
   localHotel: string;
@@ -49,14 +49,14 @@ export class RegisterTrayComponent implements OnInit {
   initializeForm() {
     this.firstFormGroup = new FormGroup({
       firstCtrl: new FormControl('', [Validators.required]),
-      countryCtrl: new FormControl('', [Validators.required]),
-      cityCtrl: new FormControl('', [Validators.required]),
-      hotelCtrl: new FormControl('', [Validators.required]),
+      countryCtrl: new FormControl(0, [Validators.required]),
+      cityCtrl: new FormControl(0, [Validators.required]),
+      hotelCtrl: new FormControl(0, [Validators.required]),
       roomId: new FormControl('', [Validators.required, validateNumberPositive]),
-      lightSensitivity: new FormControl('', [Validators.required, Validators.max(1023), Validators.min(0)]),
+      lightSensitivity: new FormControl(420, [Validators.required, Validators.max(1023), Validators.min(0)]),
       wifiNameCtrl: new FormControl('', [Validators.required]),
       wifiPasswordCtrl: new FormControl('', [Validators.required]),
-      deviceId: new FormControl('')
+      deviceId: new FormControl(this.currentTrayTagId != '' ? this.currentTrayTagId : '')
     });
   }
 
@@ -78,7 +78,6 @@ export class RegisterTrayComponent implements OnInit {
     this.authService.login({}).subscribe(result => {
       this.resultFromLogin = result.token;
     });
-
   }
 
   getCountries(): void {
@@ -90,18 +89,23 @@ export class RegisterTrayComponent implements OnInit {
   }
 
   setExistingData(existingData) {
-    this.messageNfcModel.name = existingData.name;
-    this.messageNfcModel.country = existingData.country;
-    this.messageNfcModel.roomId = existingData.roomId;
-    if (this.messageNfcModel.country != undefined) {
-      this.onCountryChange(this.messageNfcModel.country, existingData.city);
-      this.onCityChange(this.messageNfcModel.city);
+    //this.messageNfcModel.deviceId = this.currentTrayTagId;
+    if (Object.keys(existingData).length != 0) {
+      this.messageNfcModel.name = existingData.name;
+      this.messageNfcModel.country = existingData.country;
+      this.messageNfcModel.roomId = existingData.roomId;
+      if (this.messageNfcModel.country != undefined) {
+        this.onCountryChange(this.messageNfcModel.country, existingData.city);
+        this.onCityChange(this.messageNfcModel.city);
+      }
+      this.messageNfcModel.hotelId = existingData.hotelId;
+      this.messageNfcModel.wifiName = existingData.wifiName;
+      this.messageNfcModel.wifiPassword = existingData.wifiPassword;
+      this.messageNfcModel.deviceType = existingData.deviceType;
+    } else {
+      this.messageNfcModel = new MessageNfcModel();
+      this.initializeForm();
     }
-    this.messageNfcModel.hotelId = existingData.hotelId;
-    this.messageNfcModel.wifiName = existingData.wifiName;
-    this.messageNfcModel.wifiPassword = existingData.wifiPassword;
-    this.messageNfcModel.deviceId = this.currentTrayTagId;
-    this.messageNfcModel.deviceType = existingData.deviceType;
   }
 
   sendMessageToNfc() {
@@ -121,6 +125,7 @@ export class RegisterTrayComponent implements OnInit {
     this.deviceService.checkRoomAvailabilty(this.roomAvailable, this.resultFromLogin).subscribe(result => {
       this.spinnerService.hide();
       if (result && result.isCreated) {
+        delete this.messageNfcModel.deviceType;
         this.winRef.nativeWindow.foo(this.messageNfcModel);
       } else {
         this.snackBar.open("Error creating new room", '', { duration: 4000 });
@@ -132,7 +137,6 @@ export class RegisterTrayComponent implements OnInit {
   onCountryChange(countryId: number, cityFromNfc: number): any {
     if (countryId != 0) {
       this.spinnerService.show();
-      //this.localCountry = this.counties.find(country => country.id == countryId).name;
       this.deviceService.getCities(countryId).subscribe(cities => {
         this.cities = cities;
         this.messageNfcModel.city = cityFromNfc;
@@ -144,7 +148,6 @@ export class RegisterTrayComponent implements OnInit {
 
   onCityChange(cityId: number) {
     if (cityId != 0) {
-      //this.localCity = this.cities.find(city => city.id == cityId).name;
       this.spinnerService.show();
       this.deviceService.getHotels().subscribe(hotels => {
         this.hotels = hotels;
@@ -169,15 +172,23 @@ export class RegisterTrayComponent implements OnInit {
     this.messageNfcModel.roomId = 0;
   }
 
-  // setDataInNFC() {
-  //   this.roomAvailable = new RoomAvailable(
-  //     this.messageNfcModel.roomId,
-  //     this.messageNfcModel.name,
-  //     this.messageNfcModel.hotelId,
-  //     this.currentTrayTagId,
-  //     this.messageNfcModel.deviceType
-  //   );
+  deleteNfcData() {
+    this.winRef.nativeWindow.resetNFC();
+  }
 
-  //   this.winRef.nativeWindow.foo({ danny: "test" });
-  // }
+  loadFromDefault() {
+    let localStorageData: any = localStorage.getItem('predifinedData');
+    let dataFromTagToParse: any = {};
+    try {
+      dataFromTagToParse = JSON.parse(localStorageData);
+    }
+    catch (e) {
+      dataFromTagToParse = {}
+    }
+    this.setExistingData(dataFromTagToParse);
+  }
+
+  loadFromNFC() {
+    this.setNfcDataForDisplay()
+  }
 }
