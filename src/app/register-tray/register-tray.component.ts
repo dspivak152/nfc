@@ -89,7 +89,6 @@ export class RegisterTrayComponent implements OnInit {
   }
 
   setExistingData(existingData) {
-    //this.messageNfcModel.deviceId = this.currentTrayTagId;
     if (Object.keys(existingData).length != 0) {
       this.messageNfcModel.name = existingData.name;
       this.messageNfcModel.country = existingData.country;
