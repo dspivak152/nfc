@@ -46,7 +46,7 @@ export class InventoryComponent implements OnInit {
     this.spinnerService.show();
     this.requestDataFromMultipleSources().subscribe(responseList => {
       this.spinnerService.hide();
-      this.hotels = responseList[0];
+      this.hotels = [responseList[0].find(hotel => hotel.name === 'Brown JLM')];
       this.responseLogin = responseList[1];
     });
   }
@@ -60,10 +60,19 @@ export class InventoryComponent implements OnInit {
   showInventoryForHotel() {
     if (!isNaN(this.selectedHotel)) {
       this.deviceService.getRoomsOverviewData(this.selectedHotel, this.responseLogin).subscribe(result => {
-        console.log(result)
         this.hotelDevices = result;
+        this.filterHotelDevices();
       })
     }
+  }
+
+  filterHotelDevices() {
+    this.hotelDevices.forEach(device => {
+      let newArray = device.products.filter(function (x) {
+        return x.slotBoundToProduct && x.slotIsEmpty
+      })
+      device.products = newArray;
+    })
   }
 
 }

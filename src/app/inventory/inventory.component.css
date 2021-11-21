@@ -51,7 +51,7 @@
   }
   
   tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
+    background: gray;
   }
   
   tr.example-element-row:not(.example-expanded-row):active {
