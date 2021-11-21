@@ -43,8 +43,6 @@ export class DeviceService {
     return this.httpAdapterService.post<any>(API_BASE_URL + '/devices', newRoom, reqHeader).pipe(
       catchError(this.handleError<any>('Unable to create new room'))
     );
-    // return this.http.post<RoomAvailabiltyResponse>('http://sinfori.com:3080/api/devices', newRoom, { headers: reqHeader }).pipe(
-    //   catchError(this.handleError<any>('Unable to create new room')));;
   }
 
   getDevices(token: string): Observable<any> {
@@ -53,7 +51,14 @@ export class DeviceService {
       'Authorization': 'Bearer ' + token
     });
     return this.httpAdapterService.get<any>(API_BASE_URL + '/devices', { headers: reqHeader })
-    //return this.http.get<any>(API_BASE_URL + '/devices', { headers: reqHeader });
+  }
+
+  getRoomsOverviewData(hotelId: number, token: string): Observable<any> {
+    var reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    });
+    return this.httpAdapterService.get<any>(API_BASE_URL + '/hotels/' + hotelId + '/rooms/overview', { headers: reqHeader })
   }
 
   handleError<T>(operation = 'operation', result?: T) {

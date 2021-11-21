@@ -17,6 +17,7 @@ import { SpinnerService } from './services/spinner.service';
 import { PredefinedDataComponent } from './predefined-data/predefined-data.component';
 import { RegisteredDevicesComponent } from './registered-devices/registered-devices.component';
 import { SnackbarNfcDataComponent } from './snackbar-nfc-data/snackbar-nfc-data.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -37,7 +38,8 @@ const JWT_Module_Options: JwtModuleOptions = {
     SpinnerComponent,
     PredefinedDataComponent,
     RegisteredDevicesComponent,
-    SnackbarNfcDataComponent
+    SnackbarNfcDataComponent,
+    InventoryComponent
   ],
   imports: [
     BrowserModule,
