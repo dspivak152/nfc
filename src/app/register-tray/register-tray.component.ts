@@ -121,6 +121,15 @@ export class RegisterTrayComponent implements OnInit {
     );
 
     this.spinnerService.show();
+
+    if (!this.messageNfcModel.hasOwnProperty("wifiName")) {
+      this.messageNfcModel.wifiName = "";
+    }
+
+    if (!this.messageNfcModel.hasOwnProperty("wifiPassword")) {
+      this.messageNfcModel.wifiPassword = "";
+    }
+
     this.deviceService.checkRoomAvailabilty(this.roomAvailable, this.resultFromLogin).subscribe(result => {
       this.spinnerService.hide();
       if (result && result.isCreated) {
