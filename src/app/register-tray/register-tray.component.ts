@@ -129,11 +129,17 @@ export class RegisterTrayComponent implements OnInit {
     if (!this.messageNfcModel.hasOwnProperty("wifiPassword") || this.messageNfcModel.wifiPassword == undefined) {
       this.messageNfcModel.wifiPassword = "";
     }
+
     this.deviceService.checkRoomAvailabilty(this.roomAvailable, this.resultFromLogin).subscribe(result => {
       this.spinnerService.hide();
       if (result && result.isCreated) {
         delete this.messageNfcModel.deviceType;
-        const msgToNfc = Object.assign(this.messageNfcModel);
+        const msgToNfc = JSON.parse(JSON.stringify(this.messageNfcModel));
+
+        if (!msgToNfc.hasOwnProperty("wifiPassword") || msgToNfc.wifiPassword == undefined) {
+          msgToNfc.wifiPassword = "";
+        }
+
         this.winRef.nativeWindow.sendMessageToNfc(msgToNfc);
       } else {
         this.snackBar.open("Error creating new room", '', { duration: 4000 });
