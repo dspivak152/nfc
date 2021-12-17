@@ -20,7 +20,7 @@ export class AuthService {
 
   login(loginObject: any) {
     return this.http.post<any>('http://sinfori.com:3080/login', { username: "admin", password: "mini" }).pipe(
-      catchError(this.handleError<any>('Unable to create new room')));;
+      catchError(this.handleError<any>('Unable to create new room')));
   }
 
   handleError<T>(operation = 'operation', result?: T) {
