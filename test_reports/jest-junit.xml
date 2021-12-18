@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="3" failures="3" errors="0" time="2.918">
+  <testsuite name="AppComponent" errors="0" failures="3" skipped="0" timestamp="2021-12-18T18:44:42" time="2.888" tests="3">
+    <testcase classname="AppComponent should create the app" name="AppComponent should create the app" time="0.434">
+      <failure>Error: Template parse errors:
+Can&apos;t bind to &apos;loading&apos; since it isn&apos;t a known property of &apos;app-spinner&apos;.
+1. If &apos;app-spinner&apos; is an Angular component and it has &apos;loading&apos; input, then verify that it is part of this module.
+2. If &apos;app-spinner&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message.
+3. To allow any property add &apos;NO_ERRORS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component. (&quot;&lt;app-spinner [ERROR -&gt;][loading]=false&gt;&lt;/app-spinner&gt;
+&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@0:13
+&apos;app-spinner&apos; is not a known element:
+1. If &apos;app-spinner&apos; is an Angular component, then verify that it is part of this module.
+2. If &apos;app-spinner&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message. (&quot;[ERROR -&gt;]&lt;app-spinner [loading]=false&gt;&lt;/app-spinner&gt;
+&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@0:0
+&apos;router-outlet&apos; is not a known element:
+1. If &apos;router-outlet&apos; is an Angular component, then verify that it is part of this module.
+2. If &apos;router-outlet&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message. (&quot;&lt;app-spinner [loading]=false&gt;&lt;/app-spinner&gt;
+[ERROR -&gt;]&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@1:0
+    at syntaxError (/Users/dannyspivak/apps/packages/compiler/src/util.ts:108:17)
+    at TemplateParser.Object.&lt;anonymous&gt;.TemplateParser.parse (/Users/dannyspivak/apps/packages/compiler/src/template_parser/template_parser.ts:108:13)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._parseTemplate (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:300:33)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileTemplate (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:279:14)
+    at /Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:208:42
+    at Set.forEach (&lt;anonymous&gt;)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileComponents (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:208:15)
+    at /Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:119:12
+    at Object.then (/Users/dannyspivak/apps/packages/compiler/src/util.ts:96:52)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileModuleAndAllComponents (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:117:22)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:69:33)
+    at CompilerImpl.Object.&lt;anonymous&gt;.CompilerImpl.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/platform-browser-dynamic/src/compiler_factory.ts:69:27)
+    at TestingCompilerImpl.Object.&lt;anonymous&gt;.TestingCompilerImpl.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/platform-browser-dynamic/testing/src/compiler_factory.ts:59:27)
+    at TestBedViewEngine.Object.&lt;anonymous&gt;.TestBedViewEngine.compileComponents (/Users/dannyspivak/apps/packages/core/testing/src/test_bed.ts:405:27)
+    at Function.Object.&lt;anonymous&gt;.TestBedViewEngine.compileComponents (/Users/dannyspivak/apps/packages/core/testing/src/test_bed.ts:170:25)
+    at /Users/dannyspivak/apps/nfc/src/app/app.component.spec.ts:10:8
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:407:30)
+    at AsyncTestZoneSpec.Object.&lt;anonymous&gt;.AsyncTestZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4712:47)
+    at ProxyZoneSpec.Object.&lt;anonymous&gt;.ProxyZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:3762:43)
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:406:56)
+    at Zone.Object.&lt;anonymous&gt;.Zone.runGuarded (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:178:51)
+    at runInTestZone (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4833:33)
+    at /Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4784:21
+    at new ZoneAwarePromise (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:1347:33)
+    at /Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4783:24
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:407:30)
+    at ProxyZoneSpec.Object.&lt;anonymous&gt;.ProxyZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:3765:43)
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:406:56)
+    at Zone.Object.&lt;anonymous&gt;.Zone.run (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:167:47)
+    at Object.wrappedFunc (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4250:34)
+    at Promise.then.completed (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/utils.js:391:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/utils.js:316:10)
+    at _callCircusHook (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:181:40)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    at _runTest (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:148:5)
+    at _runTestsForDescribeBlock (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:66:9)
+    at _runTestsForDescribeBlock (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:60:9)
+    at run (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:170:21)</failure>
+    </testcase>
+    <testcase classname="AppComponent should have as title &apos;nfc&apos;" name="AppComponent should have as title &apos;nfc&apos;" time="0.007">
+      <failure>Error: Template parse errors:
+Can&apos;t bind to &apos;loading&apos; since it isn&apos;t a known property of &apos;app-spinner&apos;.
+1. If &apos;app-spinner&apos; is an Angular component and it has &apos;loading&apos; input, then verify that it is part of this module.
+2. If &apos;app-spinner&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message.
+3. To allow any property add &apos;NO_ERRORS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component. (&quot;&lt;app-spinner [ERROR -&gt;][loading]=false&gt;&lt;/app-spinner&gt;
+&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@0:13
+&apos;app-spinner&apos; is not a known element:
+1. If &apos;app-spinner&apos; is an Angular component, then verify that it is part of this module.
+2. If &apos;app-spinner&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message. (&quot;[ERROR -&gt;]&lt;app-spinner [loading]=false&gt;&lt;/app-spinner&gt;
+&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@0:0
+&apos;router-outlet&apos; is not a known element:
+1. If &apos;router-outlet&apos; is an Angular component, then verify that it is part of this module.
+2. If &apos;router-outlet&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message. (&quot;&lt;app-spinner [loading]=false&gt;&lt;/app-spinner&gt;
+[ERROR -&gt;]&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@1:0
+    at syntaxError (/Users/dannyspivak/apps/packages/compiler/src/util.ts:108:17)
+    at TemplateParser.Object.&lt;anonymous&gt;.TemplateParser.parse (/Users/dannyspivak/apps/packages/compiler/src/template_parser/template_parser.ts:108:13)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._parseTemplate (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:300:33)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileTemplate (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:279:14)
+    at /Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:208:42
+    at Set.forEach (&lt;anonymous&gt;)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileComponents (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:208:15)
+    at /Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:119:12
+    at Object.then (/Users/dannyspivak/apps/packages/compiler/src/util.ts:96:52)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileModuleAndAllComponents (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:117:22)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:69:33)
+    at CompilerImpl.Object.&lt;anonymous&gt;.CompilerImpl.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/platform-browser-dynamic/src/compiler_factory.ts:69:27)
+    at TestingCompilerImpl.Object.&lt;anonymous&gt;.TestingCompilerImpl.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/platform-browser-dynamic/testing/src/compiler_factory.ts:59:27)
+    at TestBedViewEngine.Object.&lt;anonymous&gt;.TestBedViewEngine.compileComponents (/Users/dannyspivak/apps/packages/core/testing/src/test_bed.ts:405:27)
+    at Function.Object.&lt;anonymous&gt;.TestBedViewEngine.compileComponents (/Users/dannyspivak/apps/packages/core/testing/src/test_bed.ts:170:25)
+    at /Users/dannyspivak/apps/nfc/src/app/app.component.spec.ts:10:8
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:407:30)
+    at AsyncTestZoneSpec.Object.&lt;anonymous&gt;.AsyncTestZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4712:47)
+    at ProxyZoneSpec.Object.&lt;anonymous&gt;.ProxyZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:3762:43)
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:406:56)
+    at Zone.Object.&lt;anonymous&gt;.Zone.runGuarded (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:178:51)
+    at runInTestZone (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4833:33)
+    at /Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4784:21
+    at new ZoneAwarePromise (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:1347:33)
+    at /Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4783:24
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:407:30)
+    at ProxyZoneSpec.Object.&lt;anonymous&gt;.ProxyZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:3765:43)
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:406:56)
+    at Zone.Object.&lt;anonymous&gt;.Zone.run (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:167:47)
+    at Object.wrappedFunc (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4250:34)
+    at Promise.then.completed (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/utils.js:391:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/utils.js:316:10)
+    at _callCircusHook (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:181:40)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    at _runTest (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:148:5)
+    at _runTestsForDescribeBlock (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:66:9)
+    at _runTestsForDescribeBlock (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:60:9)
+    at run (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:170:21)</failure>
+    </testcase>
+    <testcase classname="AppComponent should render title in a h1 tag" name="AppComponent should render title in a h1 tag" time="0.006">
+      <failure>Error: Template parse errors:
+Can&apos;t bind to &apos;loading&apos; since it isn&apos;t a known property of &apos;app-spinner&apos;.
+1. If &apos;app-spinner&apos; is an Angular component and it has &apos;loading&apos; input, then verify that it is part of this module.
+2. If &apos;app-spinner&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message.
+3. To allow any property add &apos;NO_ERRORS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component. (&quot;&lt;app-spinner [ERROR -&gt;][loading]=false&gt;&lt;/app-spinner&gt;
+&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@0:13
+&apos;app-spinner&apos; is not a known element:
+1. If &apos;app-spinner&apos; is an Angular component, then verify that it is part of this module.
+2. If &apos;app-spinner&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message. (&quot;[ERROR -&gt;]&lt;app-spinner [loading]=false&gt;&lt;/app-spinner&gt;
+&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@0:0
+&apos;router-outlet&apos; is not a known element:
+1. If &apos;router-outlet&apos; is an Angular component, then verify that it is part of this module.
+2. If &apos;router-outlet&apos; is a Web Component then add &apos;CUSTOM_ELEMENTS_SCHEMA&apos; to the &apos;@NgModule.schemas&apos; of this component to suppress this message. (&quot;&lt;app-spinner [loading]=false&gt;&lt;/app-spinner&gt;
+[ERROR -&gt;]&lt;router-outlet&gt;&lt;/router-outlet&gt;&quot;): ng:///DynamicTestModule/AppComponent.html@1:0
+    at syntaxError (/Users/dannyspivak/apps/packages/compiler/src/util.ts:108:17)
+    at TemplateParser.Object.&lt;anonymous&gt;.TemplateParser.parse (/Users/dannyspivak/apps/packages/compiler/src/template_parser/template_parser.ts:108:13)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._parseTemplate (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:300:33)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileTemplate (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:279:14)
+    at /Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:208:42
+    at Set.forEach (&lt;anonymous&gt;)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileComponents (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:208:15)
+    at /Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:119:12
+    at Object.then (/Users/dannyspivak/apps/packages/compiler/src/util.ts:96:52)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler._compileModuleAndAllComponents (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:117:22)
+    at JitCompiler.Object.&lt;anonymous&gt;.JitCompiler.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/compiler/src/jit/compiler.ts:69:33)
+    at CompilerImpl.Object.&lt;anonymous&gt;.CompilerImpl.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/platform-browser-dynamic/src/compiler_factory.ts:69:27)
+    at TestingCompilerImpl.Object.&lt;anonymous&gt;.TestingCompilerImpl.compileModuleAndAllComponentsAsync (/Users/dannyspivak/apps/packages/platform-browser-dynamic/testing/src/compiler_factory.ts:59:27)
+    at TestBedViewEngine.Object.&lt;anonymous&gt;.TestBedViewEngine.compileComponents (/Users/dannyspivak/apps/packages/core/testing/src/test_bed.ts:405:27)
+    at Function.Object.&lt;anonymous&gt;.TestBedViewEngine.compileComponents (/Users/dannyspivak/apps/packages/core/testing/src/test_bed.ts:170:25)
+    at /Users/dannyspivak/apps/nfc/src/app/app.component.spec.ts:10:8
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:407:30)
+    at AsyncTestZoneSpec.Object.&lt;anonymous&gt;.AsyncTestZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4712:47)
+    at ProxyZoneSpec.Object.&lt;anonymous&gt;.ProxyZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:3762:43)
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:406:56)
+    at Zone.Object.&lt;anonymous&gt;.Zone.runGuarded (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:178:51)
+    at runInTestZone (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4833:33)
+    at /Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4784:21
+    at new ZoneAwarePromise (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:1347:33)
+    at /Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4783:24
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:407:30)
+    at ProxyZoneSpec.Object.&lt;anonymous&gt;.ProxyZoneSpec.onInvoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:3765:43)
+    at ZoneDelegate.Object.&lt;anonymous&gt;.ZoneDelegate.invoke (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:406:56)
+    at Zone.Object.&lt;anonymous&gt;.Zone.run (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:167:47)
+    at Object.wrappedFunc (/Users/dannyspivak/apps/nfc/node_modules/zone.js/bundles/zone-testing-bundle.umd.js:4250:34)
+    at Promise.then.completed (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/utils.js:391:28)
+    at new Promise (&lt;anonymous&gt;)
+    at callAsyncCircusFn (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/utils.js:316:10)
+    at _callCircusHook (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:181:40)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    at _runTest (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:148:5)
+    at _runTestsForDescribeBlock (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:66:9)
+    at _runTestsForDescribeBlock (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:60:9)
+    at run (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/run.js:25:3)
+    at runAndTransformResultsToJestFormat (/Users/dannyspivak/apps/nfc/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:170:21)</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
