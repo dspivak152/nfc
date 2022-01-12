@@ -7,9 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  title = 'nfc';
   constructor(private router: Router) {
-    this.router.navigate(['/dashboard']);
+    //this.router.navigate(['/dashboard']);
   }
 }

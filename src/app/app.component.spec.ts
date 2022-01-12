@@ -1,12 +1,30 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { from } from 'rxjs';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  //   let routerSpy = {
+  //     navigate: jest.spyOn(Router, 'navigate')
+  //  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        {
+          provide: ActivatedRoute, useValue: {
+            'url': from([{
+              'id': 1
+            }])
+          }
+
+        },
+        { provide: Router, useValue: null }
+      ]
     }).compileComponents();
   }));
 
@@ -14,18 +32,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'nfc'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('nfc');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to nfc!');
   });
 });
